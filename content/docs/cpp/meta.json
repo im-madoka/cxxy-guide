@@ -1,0 +1,11 @@
+{
+  "title": "C/C++ 基础",
+  "description": "学习 C/C++ 的基础知识",
+  "root": true,
+  "pages": [
+    "index",
+    "about",
+    "---开始---",
+    "start"
+  ]
+}

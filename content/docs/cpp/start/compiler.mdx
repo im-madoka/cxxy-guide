@@ -1,0 +1,53 @@
+---
+title: 编译器
+description: 安装 C/C++ 编译器
+---
+
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import { Card, Cards } from "fumadocs-ui/components/card";
+
+编译器是一种基础工具，它能把人类编写的源代码翻译成计算机可以直接执行的程序。没有编译器，计算机无法理解和运行你的代码。学习编程时，首先需要安装并配置好编译器，这样才能把你的代码变成可以运行的应用。
+
+与大多数现代语言不同，C/C++ 是由国际标准委员会制定的**标准规范**，而并没有官方统一的编译器实现。因此，我们有许多不同的 C/C++ 编译器可供选择，比如 GCC、LLVM + Clang 和 MSVC 等，每种编译器在不同操作系统上有各自的安装方式和特性。
+
+接下来，我们将介绍在主流操作系统（Windows、macOS、Linux）下的 C/C++ 编译器安装步骤及常见开发工具的配置方法。
+
+<Tabs items={["Windows", "Macos", "Linux"]}>
+    <Tab>
+        在 Windows 上，我们可以使用 Microsoft Visual Studio 或者 MSYS 2 来安装工具链。主要区别如下：
+
+        <Cards>
+            <Card title={"MSYS 2"}>
+                <ul className="list-disc list-inside space-y-1">
+                    <li>提供了软件包管理器，可以非常方便的在 Windows 下配置 CMake、Make、GCC、Clang 等开发工具</li>
+                    <li>相比于 Visual Studio，MSYS 2 的工具链更加轻量，占用的磁盘空间更少</li>
+                    <li>使用 GCC/Clang 可以保证多平台项目开发构建工具的一致性</li>
+                    <li>提供一个类 Unix 环境，提供了一个 POSIX 兼容的 Shell (在后续章节会深入探索)</li>
+                    <li>没有图形化界面的配置方法，对于新手而言可能有些挑战</li>
+                </ul>
+            </Card>
+            <Card title={"Visual Studio"}>
+                <ul className="list-disc list-inside space-y-1">
+                    <li>微软官方的集成开发环境 (IDE)，功能强大，支持代码编辑、调试、版本控制等多种功能</li>
+                    <li>内置 MSVC 编译器，性能优异，适合 Windows 平台的应用开发</li>
+                    <li>在 Windows 下与系统的集成更好，提供了许多额外的工具库</li>
+                    <li>体积较大，功能较多较繁杂</li>
+                    <li>仅支持 Windows，且有部分功能与 GCC/Clang 不兼容，对跨平台项目来说不友好</li>
+                </ul>
+            </Card>
+        </Cards>
+
+        具体的选择应该看你的需求和偏好。对于电子与计算机院的学生，或是以后想要从事计算机方面工作的同学，我建议你至少需要学会对 MSYS 2 的安装与配置。
+
+        ### MSYS 2
+
+
+        `WIP 未完待续`
+    </Tab>
+    <Tab>
+        `WIP 未完待续`
+    </Tab>
+    <Tab>
+        `WIP 未完待续`
+    </Tab>
+</Tabs>

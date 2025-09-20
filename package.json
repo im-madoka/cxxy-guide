@@ -1,0 +1,39 @@
+{
+  "name": "cxxy-guide",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev --turbo",
+    "start": "next start",
+    "postinstall": "fumadocs-mdx",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "fumadocs-core": "15.7.12",
+    "fumadocs-mdx": "11.10.0",
+    "fumadocs-twoslash": "^3.1.7",
+    "fumadocs-ui": "15.7.12",
+    "katex": "^0.16.22",
+    "lucide-react": "^0.544.0",
+    "next": "15.5.3",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "rehype-katex": "^7.0.1",
+    "remark-math": "^6.0.0",
+    "twoslash": "^0.3.4"
+  },
+  "devDependencies": {
+    "@types/node": "24.3.3",
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
+    "typescript": "^5.9.2",
+    "@types/mdx": "^2.0.13",
+    "@tailwindcss/postcss": "^4.1.13",
+    "tailwindcss": "^4.1.13",
+    "postcss": "^8.5.6",
+    "eslint": "^9",
+    "eslint-config-next": "15.5.3",
+    "@eslint/eslintrc": "^3"
+  }
+}
