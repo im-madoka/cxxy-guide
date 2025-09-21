@@ -40,6 +40,11 @@ export const baseOptions: BaseLayoutProps = {
           url: "/docs/cpp",
           description: "学习 C/C++ 的基础知识",
         },
+        {
+          text: "杂项",
+          url: "/docs/others",
+          description: "其他乱七八糟的教程",
+        },
       ],
     },
   ],

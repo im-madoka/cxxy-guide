@@ -1,0 +1,6 @@
+{
+  "title": "杂项",
+  "description": "其他乱七八糟的教程",
+  "root": true,
+  "pages": ["index", "---Git---", "git/index"]
+}
