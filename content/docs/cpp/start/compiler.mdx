@@ -14,7 +14,7 @@ import { Steps, Step } from "fumadocs-ui/components/steps";
 
 接下来，我们将介绍在主流操作系统（Windows、macOS、Linux）下的 C/C++ 编译器安装步骤及常见开发工具的配置方法。
 
-<Tabs items={["Windows", "MacOS", "Linux"]}>
+<Tabs items={["Windows", "MacOS", "Linux", "Android"]}>
     <Tab>
         ## Windows
 
@@ -347,5 +347,24 @@ import { Steps, Step } from "fumadocs-ui/components/steps";
                 有关 GCC 和 Clang 的区别，感兴趣的同学可以自行查阅。
             </Tab>
         </Tabs>
+    </Tab>
+    <Tab>
+        ### Android
+
+        在 Android 手机上配置 C/C++ 开发环境相对较为复杂，尤其是如果你的设备没有 root 权限，很多操作会受到限制。如果你有 root 权限，操作会更加灵活和方便。
+
+        <Callout type="error">
+            **警告**
+
+            **请不要随意 root 你的手机**。这对安全性、稳定性、性能等方面都可能产生负面影响。如果你确实需要 root，建议先了解相关的风险和后果，在非主力机的闲置手机上进行。root 前请对手机数据进行备份。
+        </Callout>
+
+        Android 本质上是基于 Linux 的一个发行版，因此理论上安装 GCC 环境的方式与 Linux 类似。不过，由于 Android 在系统架构、底层 C 库等方面与传统 Linux 有所不同，直接安装和使用 GCC 可能会遇到兼容性问题。
+
+        幸运的是，有一款非常实用的软件可以帮助我们在 Android 上搭建开发环境，那就是 Termux。
+
+        **Termux** 是一个强大的 Android 终端模拟器和 Linux 环境应用。它允许你在手机上直接运行 Linux 命令、安装各种开发工具，包括 GCC、Clang 等 C/C++ 编译器，非常适合学习和简单开发。
+
+        `WIP 未完待续`
     </Tab>
 </Tabs>
