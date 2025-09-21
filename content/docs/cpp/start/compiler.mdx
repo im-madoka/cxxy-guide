@@ -5,6 +5,7 @@ description: 安装 C/C++ 编译器
 
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import { Card, Cards } from "fumadocs-ui/components/card";
+import { ClosedCaption } from "lucide-react";
 
 编译器是一种基础工具，它能把人类编写的源代码翻译成计算机可以直接执行的程序。没有编译器，计算机无法理解和运行你的代码。学习编程时，首先需要安装并配置好编译器，这样才能把你的代码变成可以运行的应用。
 
@@ -47,7 +48,138 @@ import { Card, Cards } from "fumadocs-ui/components/card";
 
         ### MSYS 2
 
-        `WIP 未完待续`
+        <p className="flex gap-2 text-sm text-gray-500"><ClosedCaption className="size-5" /> 该节由 **Goldbro233** 编写</p>
+
+        #### 什么是 MSYS2
+
+        <Callout>我们引用一部分官网对于 MSYS2 的描述：MSYS2 是一套工具和库的集合，为您提供一个易于使用的环境，用于构建、安装和运行原生 Windows 软件。</Callout>
+
+        在笔者看来，阅读这篇指南的同学们你们很成功的选择一个离 C/C++语言**最远**的操作系统，所以 C/C++也很成功的**抛弃**了你们。
+
+        当然上面这句话不是我说的，是我在找其他教程的时候看到的，当然你们也不用担心，我们马上就会解决上面这个问题。
+
+        MSYS2 就是这样一套工具链，通过很简单的一些操作，就能让你在 Windows 平台上也能获得类 Unix 的开发体验。
+
+        在以下这边指~~北~~南当中，我会简单介绍如何安装 MSYS2，如何简单的使用 vim，如何修改 MSYS2 的镜像源来加快下载速度，如何找到自己合适的安装包，以及最后如何安装 C/C++ 工具链。
+
+        我们马上开始 :D
+
+        #### 具体指南
+
+        ##### 下载 MSYS2
+
+
+
+        请你直接点击以下的对应架构进行下载👇(请各位自行解决如何访问 Github 的问题)：
+
+        1. [X86-64](https://github.com/msys2/msys2-installer/releases/download/nightly-x86_64/msys2-x86_64-latest.exe)
+        2. [Arm64](https://github.com/msys2/msys2-installer/releases/download/nightly-x86_64/msys2-arm64-latest.exe)
+
+        ##### 基本安装 MSYS2
+
+        ![MSYS2安装截图](./images/msys2/MSYS2安装截图.png)
+
+        在进行祖传的猛猛点击下一步以后，我们就会进入这样一个终端界面：
+
+        （如果没有终端打开的话，我们去找到新安装的程序，点击 `MSYS2 UCRT64` 即可。）
+
+        ![MSYS2-UCRT终端](./images/msys2/MSYS2-UCRT终端.png)
+
+        > 不必害怕终端界面，我觉得这是一个比图形化界面更加好操作的界面，接下来我们就会简单介绍。
+
+        ![MSYS2使用的终端](./images/msys2/MSYS2使用的终端.png)
+
+        MSYS2 使用的是 `bash` 作为终端，不过对我们来说没有什么区别。我们会首先介绍包管理器 `pacman` 的使用，这是我们在终端当中的“应用商店”，我们使用这个软件来安装各种程序。
+
+        我们在终端中输入这个命令来安装 `vim` 作为我们的编辑器：
+
+        （如果安装速度较慢请不用担心，这是因为我们还没有更换软件源）
+
+        ```bash
+        pacman -S vim
+        ```
+
+        ![MSYS2安装软件](./images/msys2/MSYS2安装软件.png)
+
+        输入 `Y` 即可继续安装，这是需要进行确认的一个步骤。
+
+        <Callout> 恭喜你，成功用 pacman 安装了第一个软件！接下来我们都会用这样的步骤来安装软件。</Callout>
+
+        ##### 更换软件源
+
+        MSYS2 的软件源的服务器在国外，我们可以更换国内的软件源来加快下载速度。
+
+        使用这样的命令更换软件源：
+
+        ```bash
+        sed -i "s#https\?://mirror.msys2.org/#https://mirrors.tuna.tsinghua.edu.cn/msys2/#g" /etc/pacman.d/mirrorlist*
+        ```
+
+        这样我们就将镜像源替换到了国内的清华镜像源。
+
+        ##### 寻找并下载对应软件包
+
+        MSYS2 上面有大量的软件包可供下载，我们可以使用[官方网站](https://packages.msys2.org/queue)来寻找你需要的对应软件包。
+
+        对于 pacman 来说，我们先来对于 MSYS2 和软件源进行一次完全的更新：
+
+        ```bash
+        pacman -Syyu
+        ```
+
+        输出大概是这个样子，不要忘记时常过来进行一下更新 :)
+
+        （此处可能要求你重新启动 MSYS2，不必担心同意然后重启即可。）
+
+        ![MSYS2进行更新](./images/msys2/MSYS2进行更新.png)
+
+        接下来我们来下载对应的 C/C++ 工具链，这里已经帮你们找好了对应的软件包，只需要复制下面的命令即可：
+
+        ```bash
+        pacman -S mingw-w64-ucrt-x86_64-make mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-gdb mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-clang-tools-extra -y
+        ```
+
+        这样软件包已经安装完成了，但是我们还没有办法在 Windows 的命令行环境下调用这个软件，遂下一步就是添加 Windows 的环境变量。
+
+        ##### 添加 Windows 环境变量
+
+        还记得你的 MSYS2 装在哪里了吗？ 默认状态下 应该是在 `C:\msys2` 这个目录下。
+
+        我们将 `C:\msys64\usr\bin` 和 `C:\msys64\ucrt64\bin` 添加至系统的环境变量下。
+
+        （如何添加环境变量请自行搜索，毕竟不能什么都喂到嘴里来 (~~其实是笔者懒了~~) ）
+
+        之后我们打开一个 Windows 中的终端，输入 `gcc --version`，如果出现了大抵是以下的输出，证明你的工具链已经安装完成了，可以踏入 C/C++ 的世界了！恭喜！
+
+        ![PWSH的gcc输出](./images/msys2/PWSH的gcc输出.png)
+
+        #### 补充阅读部分
+
+        ##### UCRT 是什么呢？
+
+        这里我们先把[官方介绍](https://www.msys2.org/docs/environments/)丢上来，有兴趣可以直接自行阅读。
+
+        简单来说是一个通用的 C 语言运行时，在构建时和运行时都具有更好的与 MSVC 的兼容性。
+
+        ##### pacman 是什么呢？
+
+        这里我们也把[官方介绍](https://wiki.archlinux.org/title/Pacman)丢上来，只不过这是 Archlinux Wiki。
+
+        做个简单介绍就是：这原本是 Archlinux 的包管理器，MSYS2 拿过来做了一部分改动，不过大体上是基本相同的。所以想要学习更多的使用方法直接看 Wiki也可以。
+
+        ##### 如何找到对应版本的软件包？
+
+        我们还是把[官方介绍](https://www.msys2.org/docs/package-naming/)丢上来，请各位自行阅读~
+
+        ##### 不太想看文档怎么办？
+
+        主包主包，文档实在太多了，我实在不想看怎么办？
+
+        **没办法，你一定得读喵！**
+
+        不过群里的大家都还是很友好的，欢迎提问~
+
+        （在提问前请先阅读一下[提问的智慧](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/master/README-zh_CN.md)和[别像弱智一样提问](https://github.com/tangx/Stop-Ask-Questions-The-Stupid-Ways/blob/master/README.md)）
 
         ### Visual Studio
 
