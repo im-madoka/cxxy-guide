@@ -6,6 +6,7 @@ description: 安装 C/C++ 编译器
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import { Card, Cards } from "fumadocs-ui/components/card";
 import { ClosedCaption } from "lucide-react";
+import { Steps, Step } from "fumadocs-ui/components/steps";
 
 编译器是一种基础工具，它能把人类编写的源代码翻译成计算机可以直接执行的程序。没有编译器，计算机无法理解和运行你的代码。学习编程时，首先需要安装并配置好编译器，这样才能把你的代码变成可以运行的应用。
 
@@ -65,93 +66,102 @@ import { ClosedCaption } from "lucide-react";
         我们马上开始 :D
 
         #### 具体指南
+        <Steps>
+            <Step>
+                ##### 下载 MSYS2
 
-        ##### 下载 MSYS2
+                请你直接点击以下的对应架构进行下载👇(请各位自行解决如何访问 Github 的问题)：
 
+                1. [X86-64](https://github.com/msys2/msys2-installer/releases/download/nightly-x86_64/msys2-x86_64-latest.exe)
+                2. [Arm64](https://github.com/msys2/msys2-installer/releases/download/nightly-x86_64/msys2-arm64-latest.exe)
+            </Step>
+            <Step>
+                ##### **基本安装 MSYS2**
 
+                ![MSYS2安装截图](./images/msys2/MSYS2安装截图.png)
 
-        请你直接点击以下的对应架构进行下载👇(请各位自行解决如何访问 Github 的问题)：
+                在进行祖传的猛猛点击下一步以后，我们就会进入这样一个终端界面：
 
-        1. [X86-64](https://github.com/msys2/msys2-installer/releases/download/nightly-x86_64/msys2-x86_64-latest.exe)
-        2. [Arm64](https://github.com/msys2/msys2-installer/releases/download/nightly-x86_64/msys2-arm64-latest.exe)
+                （如果没有终端打开的话，我们去找到新安装的程序，点击 `MSYS2 UCRT64` 即可。）
 
-        ##### 基本安装 MSYS2
+                ![MSYS2-UCRT终端](./images/msys2/MSYS2-UCRT终端.png)
 
-        ![MSYS2安装截图](./images/msys2/MSYS2安装截图.png)
+                <Callout>
+                    不必害怕终端界面，这是一个比图形化界面**更加好操作**的界面，接下来我们就会简单介绍。
 
-        在进行祖传的猛猛点击下一步以后，我们就会进入这样一个终端界面：
+                    如果你想要深入学习计算机，那么终端界面是你的必学项目。
+                </Callout>
 
-        （如果没有终端打开的话，我们去找到新安装的程序，点击 `MSYS2 UCRT64` 即可。）
+                ![MSYS2使用的终端](./images/msys2/MSYS2使用的终端.png)
 
-        ![MSYS2-UCRT终端](./images/msys2/MSYS2-UCRT终端.png)
+                MSYS2 使用的是 `bash` 作为终端，不过对我们来说没有什么区别。我们会首先介绍包管理器 `pacman` 的使用，这是我们在终端当中的“应用商店”，我们使用这个软件来安装各种程序。
 
-        > 不必害怕终端界面，我觉得这是一个比图形化界面更加好操作的界面，接下来我们就会简单介绍。
+                我们在终端中输入这个命令来安装 `vim` 作为我们的编辑器：
 
-        ![MSYS2使用的终端](./images/msys2/MSYS2使用的终端.png)
+                （如果安装速度较慢请不用担心，这是因为我们还没有更换软件源）
 
-        MSYS2 使用的是 `bash` 作为终端，不过对我们来说没有什么区别。我们会首先介绍包管理器 `pacman` 的使用，这是我们在终端当中的“应用商店”，我们使用这个软件来安装各种程序。
+                ```bash
+                pacman -S vim
+                ```
 
-        我们在终端中输入这个命令来安装 `vim` 作为我们的编辑器：
+                ![MSYS2安装软件](./images/msys2/MSYS2安装软件.png)
 
-        （如果安装速度较慢请不用担心，这是因为我们还没有更换软件源）
+                输入 `Y` 即可继续安装，这是需要进行确认的一个步骤。
 
-        ```bash
-        pacman -S vim
-        ```
+                <Callout> 恭喜你，成功用 pacman 安装了第一个软件！接下来我们都会用这样的步骤来安装软件。</Callout>
+            </Step>
+            <Step>
+                ##### **更换软件源**
 
-        ![MSYS2安装软件](./images/msys2/MSYS2安装软件.png)
+                MSYS2 的软件源的服务器在国外，我们可以更换国内的软件源来加快下载速度。
 
-        输入 `Y` 即可继续安装，这是需要进行确认的一个步骤。
+                使用这样的命令更换软件源：
 
-        <Callout> 恭喜你，成功用 pacman 安装了第一个软件！接下来我们都会用这样的步骤来安装软件。</Callout>
+                ```bash
+                sed -i "s#https\?://mirror.msys2.org/#https://mirrors.tuna.tsinghua.edu.cn/msys2/#g" /etc/pacman.d/mirrorlist*
+                ```
 
-        ##### 更换软件源
+                这样我们就将镜像源替换到了国内的清华镜像源。
+            </Step>
+            <Step>
+                ##### **寻找并下载对应软件包**
 
-        MSYS2 的软件源的服务器在国外，我们可以更换国内的软件源来加快下载速度。
+                MSYS2 上面有大量的软件包可供下载，我们可以使用[官方网站](https://packages.msys2.org/queue)来寻找你需要的对应软件包。
 
-        使用这样的命令更换软件源：
+                对于 pacman 来说，我们先来对于 MSYS2 和软件源进行一次完全的更新：
 
-        ```bash
-        sed -i "s#https\?://mirror.msys2.org/#https://mirrors.tuna.tsinghua.edu.cn/msys2/#g" /etc/pacman.d/mirrorlist*
-        ```
+                ```bash
+                pacman -Syyu
+                ```
 
-        这样我们就将镜像源替换到了国内的清华镜像源。
+                输出大概是这个样子，不要忘记时常过来进行一下更新 :)
 
-        ##### 寻找并下载对应软件包
+                （此处可能要求你重新启动 MSYS2，不必担心同意然后重启即可。）
 
-        MSYS2 上面有大量的软件包可供下载，我们可以使用[官方网站](https://packages.msys2.org/queue)来寻找你需要的对应软件包。
+                ![MSYS2进行更新](./images/msys2/MSYS2进行更新.png)
 
-        对于 pacman 来说，我们先来对于 MSYS2 和软件源进行一次完全的更新：
+                接下来我们来下载对应的 C/C++ 工具链，这里已经帮你们找好了对应的软件包，只需要复制下面的命令即可：
 
-        ```bash
-        pacman -Syyu
-        ```
+                ```bash
+                pacman -S mingw-w64-ucrt-x86_64-make mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-gdb mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-clang-tools-extra -y
+                ```
 
-        输出大概是这个样子，不要忘记时常过来进行一下更新 :)
+                这样软件包已经安装完成了，但是我们还没有办法在 Windows 的命令行环境下调用这个软件，遂下一步就是添加 Windows 的环境变量。
+            </Step>
+            <Step>
+                ##### **添加 Windows 环境变量**
 
-        （此处可能要求你重新启动 MSYS2，不必担心同意然后重启即可。）
+                还记得你的 MSYS2 装在哪里了吗？ 默认状态下 应该是在 `C:\msys2` 这个目录下。
 
-        ![MSYS2进行更新](./images/msys2/MSYS2进行更新.png)
+                我们将 `C:\msys64\usr\bin` 和 `C:\msys64\ucrt64\bin` 添加至系统的环境变量下。
 
-        接下来我们来下载对应的 C/C++ 工具链，这里已经帮你们找好了对应的软件包，只需要复制下面的命令即可：
+                （如何添加环境变量请自行搜索，毕竟不能什么都喂到嘴里来 (~~其实是笔者懒了~~) ）
 
-        ```bash
-        pacman -S mingw-w64-ucrt-x86_64-make mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-gdb mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-clang-tools-extra -y
-        ```
+                之后我们打开一个 Windows 中的终端，输入 `gcc --version`，如果出现了大抵是以下的输出，证明你的工具链已经安装完成了，可以踏入 C/C++ 的世界了！恭喜！
 
-        这样软件包已经安装完成了，但是我们还没有办法在 Windows 的命令行环境下调用这个软件，遂下一步就是添加 Windows 的环境变量。
-
-        ##### 添加 Windows 环境变量
-
-        还记得你的 MSYS2 装在哪里了吗？ 默认状态下 应该是在 `C:\msys2` 这个目录下。
-
-        我们将 `C:\msys64\usr\bin` 和 `C:\msys64\ucrt64\bin` 添加至系统的环境变量下。
-
-        （如何添加环境变量请自行搜索，毕竟不能什么都喂到嘴里来 (~~其实是笔者懒了~~) ）
-
-        之后我们打开一个 Windows 中的终端，输入 `gcc --version`，如果出现了大抵是以下的输出，证明你的工具链已经安装完成了，可以踏入 C/C++ 的世界了！恭喜！
-
-        ![PWSH的gcc输出](./images/msys2/PWSH的gcc输出.png)
+                ![PWSH的gcc输出](./images/msys2/PWSH的gcc输出.png)
+            </Step>
+        </Steps>
 
         #### 补充阅读部分
 
