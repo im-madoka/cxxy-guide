@@ -8,6 +8,7 @@
     "---开始---",
     "start",
     "basic/helloworld",
-    "basic/data_type"
+    "basic/data_type",
+    "basic/variable_constant"
   ]
 }
