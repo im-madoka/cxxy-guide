@@ -12,7 +12,7 @@ import { Card, Cards } from "fumadocs-ui/components/card";
 
 接下来，我们将介绍在主流操作系统（Windows、macOS、Linux）下的 C/C++ 编译器安装步骤及常见开发工具的配置方法。
 
-<Tabs items={["Windows", "Macos", "Linux"]}>
+<Tabs items={["Windows", "MacOS", "Linux"]}>
     <Tab>
         ## Windows
 
@@ -43,13 +43,70 @@ import { Card, Cards } from "fumadocs-ui/components/card";
 
         ### MSYS 2
 
-
         `WIP 未完待续`
+
+        ### Visual Studio
+
+        Visual Studio 的安装请参考 [快速入门](/docs/cpp/start#vs)
     </Tab>
     <Tab>
-        ## Mac
+        ## MacOS
 
-        `WIP 未完待续`
+        MacOS 安装 C/C++ 环境也相对简单，主要分为官方的 Xcode 安装和 Homebrew 安装。
+
+        ### XCode
+
+        XCode 是苹果官方的集成开发环境，提供了 GCC、Clang、Make 等工具。
+
+        #### 安装 XCode 命令行工具
+
+        1. 打开终端（可以使用 `Command + Space`，输入 Terminal 后回车）
+
+        2. 输入以下命令
+
+        ```bash
+        xcode-select --install
+        ```
+
+        3. 按照提示进行操作。
+
+        #### 安装完整的 XCode 环境
+
+        完整的 XCode 环境还带有 XCode 的集成开发环境，如果你想要开发 iOS、iPadOS、MacOS、WatchOS、TVOS、VisionOS 的应用，可以下载完整版的 XCode。
+
+        完整版的 XCode 安装更加简单，打开 App Store，搜索 XCode 安装即可。安装完后，首次打开 XCode 会自动安装所需工具链。
+
+        ### Homebrew
+
+        如果你不想使用官方的 XCode 来安装环境，也可以使用 MacOS 下的第三方包管理器，如 Homebrew，Port 来安装。这里以 Homebrew 为例。
+
+        1. **安装 Homebrew**
+
+        ```bash
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        ```
+
+        按照提示输入密码，等待安装。
+
+        2. 安装 GCC/Clang
+
+        GCC:
+
+        ```bash
+        brew install gcc
+        ```
+
+        Clang:
+
+        ```bash
+        brew install llvm
+        ```
+
+        <Callout type="warn">
+            **注意**
+
+            Homebrew 安装的 clang 命令会带有版本号后缀（例如 clang-15），以避免与系统自带的 clang 冲突。你可以通过 brew info llvm 查看具体的可执行文件路径。
+        </Callout>
     </Tab>
     <Tab>
         ## Linux
