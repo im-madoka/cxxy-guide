@@ -33,5 +33,4 @@ export const baseOptions: BaseLayoutProps = {
       ],
     },
   ],
-  githubUrl: "https://github.com/SithraBot/sithra-rs",
 };
