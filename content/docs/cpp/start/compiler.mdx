@@ -14,7 +14,9 @@ import { Card, Cards } from "fumadocs-ui/components/card";
 
 <Tabs items={["Windows", "Macos", "Linux"]}>
     <Tab>
-        在 Windows 上，我们可以使用 Microsoft Visual Studio 或者 MSYS 2 来安装工具链。主要区别如下：
+        ## Windows
+
+        在 Windows 上，我们可以使用 Microsoft Visual Studio 或者 MSYS 2 来安装工具链（也可以使用 Windows Subsystem for Linux 2 安装 Linux 的 C/C++ 工具链，方法和 Linux 相同）。主要区别如下：
 
         <Cards>
             <Card title={"MSYS 2"}>
@@ -45,9 +47,96 @@ import { Card, Cards } from "fumadocs-ui/components/card";
         `WIP 未完待续`
     </Tab>
     <Tab>
+        ## Mac
+
         `WIP 未完待续`
     </Tab>
     <Tab>
-        `WIP 未完待续`
+        ## Linux
+
+        在 Linux 下安装 C/C++ 环境较为简单，大多数发行版的包管理器中就含有 GCC/Clang 工具链。下面以 Ubuntu 和 Arch Linux 为例，介绍如何安装 GCC/Clang 工具链。
+
+        <Callout>
+            **提示**
+
+            GCC/Clang 编译器可以共存，而并非只能选择其中一个。
+        </Callout>
+
+        <Tabs items={["Arch Linux", "Ubuntu"]}>
+            <Tab>
+                ### Arch Linux
+
+                Arch Linux 使用 Pacman 作为包管理器。使用 Pacman 即可安装工具链。
+
+                #### GCC
+
+                ```bash
+                sudo pacman -S base-devel cmake
+                ```
+
+                base-devel 包含了 GCC、Make 等基本开发工具。事实上我们一般会选择在安装 Arch Linux 的过程中直接安装 base-devel 包。
+
+                验证是否安装完毕
+
+                ```bash
+                gcc --version
+                make --version
+                cmake --version
+                ```
+
+                #### LLVM + Clang
+
+                ```bash
+                sudo pacman -S clang llvm lld lldb make cmake
+                ```
+
+                验证是否安装完毕
+
+                ```bash
+                clang --version
+                make --version
+                cmake --version
+                ```
+
+                有关 GCC 和 Clang 的区别，感兴趣的同学可以自行查阅。
+            </Tab>
+            <Tab>
+                ### Ubuntu
+
+                Ubuntu 使用 Apt 作为包管理器。
+
+                #### GCC
+
+                ```bash
+                sudo apt install build-essential cmake
+                ```
+
+                build-essential 类似于 Arch Linux 的 base-devel，包含了 GCC、Make 等基本开发工具。
+
+                验证是否安装完毕
+
+                ```bash
+                gcc --version
+                make --version
+                cmake --version
+                ```
+
+                #### LLVM + Clang
+
+                ```bash
+                sudo apt install clang llvm lld lldb make cmake
+                ```
+
+                验证是否安装完毕
+
+                ```bash
+                clang --version
+                make --version
+                cmake --version
+                ```
+
+                有关 GCC 和 Clang 的区别，感兴趣的同学可以自行查阅。
+            </Tab>
+        </Tabs>
     </Tab>
 </Tabs>
