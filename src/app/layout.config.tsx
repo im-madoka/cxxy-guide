@@ -21,6 +21,16 @@ export const baseOptions: BaseLayoutProps = {
   },
   links: [
     {
+      type: "main",
+      text: "首页",
+      url: "/",
+    },
+    {
+      type: "main",
+      text: "关于",
+      url: "/docs/global",
+    },
+    {
       type: "menu",
       text: "文档",
       url: "/docs/cpp",

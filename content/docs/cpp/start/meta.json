@@ -1,8 +1,5 @@
 {
   "title": "配置环境",
   "description": "安装 C/C++ 开发环境",
-  "pages": [
-    "index",
-    "compiler"
-  ]
+  "pages": ["index", "compiler", "ide"]
 }
