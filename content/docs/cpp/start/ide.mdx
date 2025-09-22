@@ -3,6 +3,8 @@ title: IDE/编辑器
 description: 安装 IDE/编辑器
 ---
 
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+
 安装完编译器后，你还需要一个趁手的代码编辑工具。想象一下，编译器就像是翻译官，而 IDE 或编辑器就是你的写作台——一个好的写作环境能让你的编程之旅事半功倍！
 
 常见的 C/C++ IDE/编辑器 有 Visual Studio，Clion，Xcode，Visual Studio Code，Zed 等等。
@@ -33,48 +35,74 @@ description: 安装 IDE/编辑器
 
 下面我们简单介绍几个主流 IDE/编辑器 的安装
 
-## Visual Studio (`Windows`)
+<Tabs items={["Visual Studio", "Clion", "Xcode", "VSCode", "Zed"]}>
+    <Tab>
+        ## Visual Studio 2022 (`Windows`)
 
-该内容详见 [快速入门](/docs/cpp/start#vs)
+        该内容详见 [快速入门](/docs/cpp/start#vs)
 
-## Clion (`Windows`/`MacOS`/`Linux`)
+        ## Visual Studio 2010 (`Windows`)
 
-Clion 是 JetBrains 开发的 C/C++ IDE，支持 Windows、MacOS、Linux 等系统。
+        <Callout type="error">
+            **注意**
 
-Clion 的配置和安装已经在 [快速入门](/docs/cpp/start#clion) 中讲过，其中 MacOS 和 Linux 的配置教程与 Windows 类似，这里不过多赘述。
+            Visual Studio 2010 已经停止支持，使用旧版本可能会遇到兼容性问题和安全风险。强烈建议使用 Visual Studio 2022 或更高版本。
 
-## Xcode (`MacOS`)
+            由于官方已经不再提供 Visual Studio 2010 的安装包，这里提供的安装包是由互联网第三方网站提供，可能会存在安全问题，请自行斟酌是否下载。
+        </Callout>
 
-Xcode 是 Apple 开发的 IDE，支持 Object C、Swift 以及 C/C++ 的编写，仅支持 MacOS 系统。如果你想开发 iOS、iPadOS、MacOS、WatchOS、TvOS、VisionOS 应用，那么 Xcode 是你不错的选择。
+        下载链接：
 
-安装 Xcode 比较简单。在 App Store 中搜索 Xcode，点击下载并安装即可。
+        ```
+        ed2k://|file|cn_visual_studio_2010_express_x86_dvd_532024.iso|1884567552|3BB6EFEECD4966BE6DFAAB5D579A80CF|/
+        ```
 
-![Xcode](./images/xcode/1.png)
+        按照安装包的指示安装即可。
+    </Tab>
+    <Tab>
+        ## Clion (`Windows`/`MacOS`/`Linux`)
 
-打开 Xcode
+        Clion 是 JetBrains 开发的 C/C++ IDE，支持 Windows、MacOS、Linux 等系统。
 
-![Open Xcode](./images/xcode/2.png)
+        Clion 的配置和安装已经在 [快速入门](/docs/cpp/start#clion) 中讲过，其中 MacOS 和 Linux 的配置教程与 Windows 类似，这里不过多赘述。
+    </Tab>
+    <Tab>
+        ## Xcode (`MacOS`)
 
-点击 `Create New Project`，选择 `MacOS` > `Command Line Tool`，点击 `Next`
+        Xcode 是 Apple 开发的 IDE，支持 Object C、Swift 以及 C/C++ 的编写，仅支持 MacOS 系统。如果你想开发 iOS、iPadOS、MacOS、WatchOS、TvOS、VisionOS 应用，那么 Xcode 是你不错的选择。
 
-![Create New Project](./images/xcode/3.png)
+        安装 Xcode 比较简单。在 App Store 中搜索 Xcode，点击下载并安装即可。
 
-输入 Project Name，选择 `Next`
+        ![Xcode](./images/xcode/1.png)
 
-![Set Project Info](./images/xcode/4.png)
+        打开 Xcode
 
-设置项目的保存位置，点击 `Create`
+        ![Open Xcode](./images/xcode/2.png)
 
-![Set Save Path](./images/xcode/5.png)
+        点击 `Create New Project`，选择 `MacOS` > `Command Line Tool`，点击 `Next`
 
-开始编码🧑‍💻
+        ![Create New Project](./images/xcode/3.png)
 
-![](./images/xcode/6.png)
+        输入 Project Name，选择 `Next`
 
-## Visual Studio Code (`Windows`/`MacOS`/`Linux`/`Web`)
+        ![Set Project Info](./images/xcode/4.png)
 
-`WIP`
+        设置项目的保存位置，点击 `Create`
 
-## Zed (`MacOS`/`Linux`/`Windows 未完全支持`)
+        ![Set Save Path](./images/xcode/5.png)
 
-`WIP`
+        开始编码🧑‍💻
+
+        ![](./images/xcode/6.png)
+    </Tab>
+    <Tab>
+        ## Visual Studio Code (`Windows`/`MacOS`/`Linux`/`Web`)
+
+        `WIP`
+    </Tab>
+    <Tab>
+        ## Zed (`MacOS`/`Linux`/`Windows 未完全支持`)
+
+        `WIP`
+    </Tab>
+</Tabs>
