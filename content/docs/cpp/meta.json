@@ -9,6 +9,7 @@
     "start",
     "basic/helloworld",
     "basic/data_type",
-    "basic/variable_constant"
+    "basic/variable_constant",
+    "basic/operators"
   ]
 }
