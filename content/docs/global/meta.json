@@ -2,5 +2,5 @@
   "title": "总览",
   "description": "东大成贤计算机协会总览",
   "root": true,
-  "pages": ["index"]
+  "pages": ["index", "about", "---比赛---", "competition/lanqiao"]
 }
