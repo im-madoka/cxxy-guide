@@ -53,7 +53,7 @@ int d = 10, e, f = 20;
 
     - 标识符只能由字母、数字和下划线组成，且不能以数字开头。
     - 标识符区分大小写。
-    - 标识符不能是 C++ 关键字。
+    - 标识符不能是 **C++ 关键字(或称保留字)** [^1]。
     - 在[**同一作用域**](#变量和常量的作用域)内，标识符不能重复。
     - 标识符必须在使用前定义。
 
@@ -144,3 +144,5 @@ int main() {
 全局变量可以在整个程序中访问，函数内部定义的变量只能在该函数内使用，而在代码块 `{}` 内定义的变量则只能在这个代码块里访问，出了代码块就无法再使用。也就是说，变量只能在它被定义的范围内有效，超出这个范围就无法访问。
 
 变量的作用域也决定了它的**生命周期**——也就是变量“活着”的时间。局部变量在进入代码块时创建，离开代码块时销毁。全局变量在程序开始时创建，程序结束时销毁。
+
+[^1]: C++ 常见关键字(或称保留字)包括：`auto`, `break`, `case`, `catch`, `char`, `class`, `const`, `const_cast`, `continue`, `default`, `delete`, `do`, `double`, `dynamic_cast`, `else`, `enum`, `explicit`, `export`, `extern`, `false`, `float`, `for`, `friend`, `goto`, `if`, `inline`, `int`, `long`, `mutable`, `namespace`, `new`, `operator`, `private`, `protected`, `public`, `register`, `reinterpret_cast`, `return`, `short`, `signed`, `sizeof`, `static`, `static_cast`, `struct`, `switch`, `template`, `this`, `throw`, `true`, `try`, `typedef`, `typeid`, `typename`, `union`, `unsigned`, `using`, `virtual`, `void`, `volatile`, `wchar_t`, `while`, `xor`, `xor_eq` 等等。
