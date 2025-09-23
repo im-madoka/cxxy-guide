@@ -5,8 +5,11 @@
   "pages": [
     "index",
     "about",
+    "---环境配置---",
+    "start/index",
+    "start/compiler",
+    "start/ide",
     "---开始---",
-    "start",
     "basic/helloworld",
     "basic/data_type",
     "basic/variable_constant",
