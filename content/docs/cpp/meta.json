@@ -13,6 +13,7 @@
     "basic/helloworld",
     "basic/data_type",
     "basic/variable_constant",
-    "basic/operators"
+    "basic/operators",
+    "basic/io"
   ]
 }
