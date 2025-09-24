@@ -36,5 +36,8 @@ export default defineConfig({
         transformerTwoslash(),
       ],
     },
+    remarkCodeTabOptions: {
+      parseMdx: true,
+    },
   },
 });
