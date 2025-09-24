@@ -14,6 +14,8 @@
     "basic/data_type",
     "basic/variable_constant",
     "basic/operators",
-    "basic/io"
+    "basic/io",
+    "---流程控制---",
+    "control/if_else"
   ]
 }
