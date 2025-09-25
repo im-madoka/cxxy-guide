@@ -109,4 +109,41 @@ int main() {
     而在 C++ 中，我们不需要使用 `typedef` 关键字来定义一个新的类型名，因为 `struct` 关键字会定义了一个新的类型名。当然，上述写法在 C++ 中依然有效。
 </Callout>
 
+## 枚举
+
+枚举是一种特殊的类型，它允许你定义一组命名的常量。在 C++ 中，你可以使用 `enum` 关键字来定义一个枚举类型。
+
+例如，我们可以定义一个表示颜色的枚举类型：
+
+```cpp
+enum Color {
+    RED,
+    GREEN,
+    BLUE
+};
+```
+
+现在，我们可以使用 `Color` 类型来表示颜色：
+
+```cpp
+Color color = RED;
+```
+
+枚举类型可以有初始值，例如：
+
+```cpp
+enum Color {
+    RED = 1,
+    GREEN = 2,
+    BLUE = 3
+};
+```
+
+现在，我们可以使用 `Color` 类型来表示颜色，并且可以使用整数来表示颜色：
+
+```cpp
+Color color = RED;
+int colorValue = static_cast<int>(color);
+```
+
 `WIP 未完待续`
