@@ -153,4 +153,178 @@ int main() {
 
 ## `switch` 语句
 
-`WIP 未完待续`
+当要判断相等的条件非常多的时候，`else if` 就会显得冗长和不必要。比如，我们要在对应日子输出对应的星期数，假如使用 `if` 的话要这样写：
+
+```cpp
+if (day == 1) {
+    cout << "星期一" << endl;
+} else if (day == 2) {
+    cout << "星期二" << endl;
+} else if (day == 3) {
+    cout << "星期三" << endl;
+} else if (day == 4) {
+    cout << "星期四" << endl;
+} else if (day == 5) {
+    cout << "星期五" << endl;
+} else if (day == 6) {
+    cout << "星期六" << endl;
+} else if (day == 7) {
+    cout << "星期日" << endl;
+} else {
+    cout << "无效的日期" << endl;
+}
+```
+
+很显然，每个分支我们都需要写上重复的 `day ==`。我们可以使用 `switch` 来简化这段代码：
+
+```cpp
+switch (day) {
+    case 1:
+        cout << "星期一" << endl;
+        break;
+    case 2:
+        cout << "星期二" << endl;
+        break;
+    case 3:
+        cout << "星期三" << endl;
+        break;
+    case 4:
+        cout << "星期四" << endl;
+        break;
+    case 5:
+        cout << "星期五" << endl;
+        break;
+    case 6:
+        cout << "星期六" << endl;
+        break;
+    case 7:
+        cout << "星期日" << endl;
+        break;
+    default:
+        cout << "无效的日期" << endl;
+}
+```
+
+我们可以看到，`switch` 语句的语法格式如下：
+
+```cpp
+switch (表达式) {
+    case 值1:
+        // 代码块1
+        break;
+    case 值2:
+        // 代码块2
+        break;
+    case 值3:
+        // 代码块3
+        break;
+    // 更多的case...
+    default:
+        // 默认代码块
+}
+```
+
+`switch` 语句的工作原理是：
+1. 计算 `switch` 后括号中表达式的值
+2. 将这个值与各个 `case` 标签后的值进行比较
+3. 如果找到匹配的 `case`，就从该 `case` 开始执行代码，**直到遇到 `break;` 或 `switch` 结束**
+4. 如果没有找到匹配的 `case`，则执行 `default` 分支（如果存在的话）
+
+<Callout type="warn">
+    **注意**
+
+    `case` 会一直向下执行，直到遇到 `break;` 或 `switch` 结束，而不是只运行完当前代码块，例如：
+
+    ```cpp
+    switch (day) {
+        case 1:
+            cout << "星期一" << endl;
+        case 2:
+            cout << "星期二" << endl;
+        case 3:
+            cout << "星期三" << endl;
+        case 4:
+            cout << "星期四" << endl;
+        case 5:
+            cout << "星期五" << endl;
+        case 6:
+            cout << "星期六" << endl;
+        case 7:
+            cout << "星期日" << endl;
+        default:
+            cout << "无效的日期" << endl;
+    }
+    ```
+
+    假如 day 为 2 的时候，这段程序将输出：
+
+    ```plaintext
+    星期二
+    星期三
+    星期四
+    星期五
+    星期六
+    星期日
+    无效的日期
+    ```
+
+    因为没有 `break`，程序从 `case 2` 开始执行，然后继续执行 `case 3`，中间一直没有 `break`，所以直到 `switch` 结束才停止。
+</Callout>
+
+`switch` 还可以和我们之前提到的枚举 `enum` 结合使用，例如：
+
+```cpp
+enum Color {
+    RED,
+    GREEN,
+    BLUE
+};
+
+Color color = RED;
+
+switch (color) {
+    case RED:
+        cout << "红色" << endl;
+        break;
+    case GREEN:
+        cout << "绿色" << endl;
+        break;
+    case BLUE:
+        cout << "蓝色" << endl;
+        break;
+    default:
+        cout << "未知颜色" << endl;
+}
+```
+
+<Callout type="warn">
+    **注意**
+
+    1. `switch` 表达式的结果必须是整数类型（如 `int`、`char`、`short` 等）或枚举类型，**不能用于浮点数或字符串**。
+    2. 每个 `case` 标签后的值必须是编译时就能确定的常量，不能是变量。
+</Callout>
+
+## 三元表达式
+
+C++ 还提供了一个可以用于赋值的简洁的条件表达式的写法，称为三元运算符，语法如下：
+
+```cpp
+<条件> ? <值为真时的表达式> : <值为假时的表达式>
+```
+
+例如：
+
+```cpp lineNumbers title="main.cpp"
+#include <iostream>
+using namespace std;
+
+int main() {
+    int a = 5;
+    int b = 10;
+    int max = (a > b) ? a : b;
+    cout << "最大值是：" << max << endl;
+    return 0;
+}
+```
+
+三元运算符在简单的条件赋值时非常有用，但对于复杂的逻辑，还是建议使用 `if-else` 语句以保持代码的可读性。
