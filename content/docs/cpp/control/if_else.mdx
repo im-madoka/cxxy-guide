@@ -27,7 +27,7 @@ if (条件表达式) {
 
 其中，条件表达式为一个布尔值（`bool`，值只有 `true` 或 `false`）的参数。如果条件表达式为 `true`，则执行大括号内的代码块；如果条件表达式为 `false`，则跳过大括号内的代码块。例如：
 
-```cpp
+```cpp lineNumbers title="main.cpp"
 #include <iostream>
 using namespace std;
 
@@ -48,7 +48,7 @@ int main() {
 
 那么如果我还需要输出未成年的消息呢？你的确可以再使用一个 `if (age < 18) {}` 来进行判断，但是很显然，这并不是必要的。C++ 提供了 `否则` 符号，即 `else`。
 
-```cpp
+```cpp lineNumbers title="main.cpp"
 #include <iostream>
 using namespace std;
 
@@ -71,7 +71,7 @@ int main() {
 
 在某些情况下，需要判断的问题可能不止，比如说，在上例中，当 age < 0 时，程序也会输出 `你还未成年哦！`。那么如果我想让他输出 `你还没有出生呢！`，那么就可以使用 `else if` 语句来进行。
 
-```cpp
+```cpp lineNumbers title="main.cpp"
 #include <iostream>
 using namespace std;
 
@@ -127,7 +127,7 @@ if (条件1) {
 
 if 语句可以嵌套使用，即在一个 if 语句内部再使用 if 语句：
 
-```cpp
+```cpp lineNumbers title="main.cpp"
 #include <iostream>
 using namespace std;
 
