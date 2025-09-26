@@ -1,0 +1,125 @@
+---
+title: 函数基础
+description: 学会复用你的代码
+---
+
+在前面的程序中，我们总是会提到 `定义主函数 main()`，那么，大家有没有想过，函数是什么呢？
+
+想象一下，如果你需要在程序的多个地方计算两个数的和，你可能会这样写：
+
+```cpp lineNumbers title="main.cpp"
+#include <iostream>
+using namespace std;
+
+int main() {
+    // 第一次计算
+    int a = 5, b = 3;
+    int result1 = a + b;
+    cout << "5 + 3 = " << result1 << endl;
+
+    // 第二次计算
+    int c = 10, d = 7;
+    int result2 = c + d;
+    cout << "10 + 7 = " << result2 << endl;
+
+    // 第三次计算
+    int e = 15, f = 8;
+    int result3 = e + f;
+    cout << "15 + 8 = " << result3 << endl;
+
+    return 0;
+}
+```
+
+我们不难发现，三次运算的整体逻辑是差不多的，只不过计算的值不一样而已。这样的代码存在很多重复的相似代码块，如果计算逻辑更复杂，重复的代码块会更多，使得文件变得臃肿。这时候，函数就派上用场了。
+
+## 什么是函数
+
+**函数**是一段可以重复使用的代码块，它接收可选的输入（参数），执行特定的操作，并可能返回一个结果。你可以把函数想象成一台"加工机器"，使用它的方法是：
+
+- 输入原材料（参数）
+- 按照固定流程加工（函数体）
+- 输出成品（返回值）
+
+## 函数的基本语法
+
+C++ 中函数的基本语法如下：
+
+```cpp
+<返回类型> <函数名>(<参数列表>) {
+    // 函数体
+    return <返回值>; // 如果返回类型不是 void 则必须返回一个值
+}
+```
+
+函数的参数列表可以为空，也可以为一个或多个参数，以 `<数据类型> <参数名>` 的形式定义。
+
+让我们以上面的加法函数为例：
+
+```cpp lineNumbers title="main.cpp"
+#include <iostream>
+using namespace std;
+
+int add(int a, int b) {
+    return a + b;
+}
+
+int main() {
+    cout << "5 + 3 = " << add(5, 3) << endl; // 结果为 8
+    cout << "10 + 7 = " << add(10, 7) << endl; // 结果为 17
+    cout << "15 + 8 = " << add(15, 8) << endl; // 结果为 23
+
+    return 0;
+}
+```
+
+上面的 `add` 函数接受两个 `int` 类型的参数，并且返回一个 `int` 类型的值。
+
+如果函数不需要有返回值，可以使用 `void` 作为返回类型，并且不需要在函数体中使用 `return` 语句：
+
+```cpp
+void func1() {
+    cout << "Hello, World!" << endl;
+}
+```
+
+函数必须要在**使用前**定义，在使用后定义是无法编译成功的：
+
+```cpp lineNumbers title="main.cpp"
+#include <iostream>
+using namespace std;
+
+void func1() {
+    // ...
+}
+
+int main() {
+    func1(); // ✅ 可以正常使用，因为在此之前定义了变量
+    cout << add(1, 2) << endl; // ❌ 这里无法正常使用，会报编译错误
+    return 0;
+}
+
+int add(int a, int b) {
+    return a + b;
+}
+```
+
+当然，你也可以在使用的地方前声明函数，并在后面定义函数：
+
+```cpp lineNumbers title="main.cpp"
+#include <iostream>
+using namespace std;
+
+// 函数声明
+int add(int a, int b);
+
+int main() {
+    cout << add(1, 2) << endl; // ✅ 这里可以正常使用不会报错
+    return 0;
+}
+
+// 函数具体定义
+int add(int a, int b) {
+    return a + b;
+}
+```

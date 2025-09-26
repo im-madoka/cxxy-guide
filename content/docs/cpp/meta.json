@@ -18,6 +18,8 @@
     "basic/io",
     "---流程控制---",
     "control/if_else",
-    "control/loop"
+    "control/loop",
+    "---函数---",
+    "functions/index"
   ]
 }
