@@ -1,4 +1,5 @@
 import "@/app/global.css";
+import { Analytics } from "@vercel/analytics/next";
 import { RootProvider } from "fumadocs-ui/provider";
 import { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
 export default function Layout({ children }: LayoutProps<"/">) {
   return (
     <html lang="zh_CN" className={inter.className} suppressHydrationWarning>
+      <Analytics />
       <body className="flex flex-col min-h-screen">
         <RootProvider>{children}</RootProvider>
       </body>
