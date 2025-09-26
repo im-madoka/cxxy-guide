@@ -17,6 +17,7 @@
     "basic/complex_data_type",
     "basic/io",
     "---流程控制---",
-    "control/if_else"
+    "control/if_else",
+    "control/loop"
   ]
 }

@@ -1,0 +1,231 @@
+---
+title: 循环控制
+description: 介绍循环控制语句的使用方法
+---
+
+在前一节中，我们学习了条件语句，让程序能够根据不同的条件执行不同的代码块。但是，如果我们需要重复执行某些操作该怎么办呢？比如说：
+
+- 输出 1 到 100 之间的所有数字
+- 计算 1 到 n 的累加和
+- 不断询问用户输入，直到输入正确的密码
+
+我们确实可以这么写：
+
+```cpp
+cout << 1 << endl;
+cout << 2 << endl;
+...
+cout << 100 << endl;
+```
+
+但很显然，这很麻烦，更不要说这还只是个小数字。万一需求是输出 1 到 10000 之间的所有数字呢？
+
+这时候，循环的作用就体现出来了。
+
+## 什么是循环语句
+
+循环语句允许程序重复执行某段代码，直到指定的条件不再满足。在 C++ 中，主要有三种循环语句：
+
+- `while` 循环（部分书上称为条件循环）：适用于条件为真时持续执行的情况
+- `do-while` 循环：至少执行一次，然后根据条件决定是否继续
+- `for` 循环（部分书上称为计数循环）：适用于已知循环次数的情况
+
+让我们一个一个来看。
+
+## 条件循环 `while`、`do-while`
+
+`while` 和 `do-while` 循环都是条件循环，它们的区别在于执行时机的不同。
+
+`while` 循环会在每次循环开始前检查条件，如果条件为真，则执行循环体；否则，直接跳过循环体，继续执行后续代码。
+
+`do-while` 循环则会在每次循环结束后检查条件，如果条件为真，则继续执行循环体；否则，直接跳出循环，继续执行后续代码。
+
+`while` 和 `do-while` 循环的语法如下：
+
+```cpp
+while (<条件表达式>) {
+    // 循环体
+}
+
+do {
+    // 循环体
+} while (<条件表达式>);
+```
+
+`while` 循环特别适用于**不知道确切循环次数，但知道循环结束条件**的情况（当然计数循环也能写），例如：
+
+```cpp lineNumbers title="main.cpp"
+#include <iostream>
+using namespace std;
+
+int main() {
+    int number;
+
+    cout << "请输入一个正数（输入 0 结束）：";
+    cin >> number;
+
+    while (number != 0) {
+        if (number > 0) {
+            cout << "你输入了正数：" << number << endl;
+        } else {
+            cout << "请输入正数！" << endl;
+        }
+
+        cout << "请输入一个正数（输入 0 结束）：";
+        cin >> number;
+    }
+
+    cout << "程序结束" << endl;
+    return 0;
+}
+```
+
+这一段程序其实可以用 `do-while` 循环来更简单的实现：
+
+```cpp lineNumbers title="main.cpp"
+#include <iostream>
+using namespace std;
+
+int main() {
+    int number;
+
+    do {
+        cout << "请输入一个正数（输入 0 结束）：";
+        cin >> number;
+
+        if (number > 0) {
+            cout << "你输入了正数：" << number << endl;
+        } else if (number < 0) {
+            cout << "请输入正数！" << endl;
+        }
+    } while (number != 0);
+
+    cout << "程序结束" << endl;
+    return 0;
+}
+```
+
+## 计数循环 `for`
+
+有些时候，我们完全可以知道循环应该执行多少次，例如，输出 1 到 100 之间的所有数字，我们很显然的就能知道应该循环 100 次。这个时候，`for` 的意义就显示出来了：
+
+`for` 循环的语法如下：
+
+```cpp
+for (初始化表达式; 条件表达式; 更新表达式) {
+    // 循环体
+}
+```
+
+一般来说，初始表达式用于初始化循环变量，条件表达式用于判断循环是否继续，更新表达式用于更新循环变量。我们还是拿输出 1 到 100 之间的所有数字举例，我们可以这样写：
+
+```cpp
+for (int i = 1; i <= 100; i++) {
+    cout << i << endl;
+}
+```
+
+`int i = 1` 在 `for` 循环开始前先定义了一个 `i` 变量，并将其初始化为 1（`i` 的作用域在 `for` 循环内部）。然后开始条件检查，1 明显 \<= 10，因此执行循环体，也就是 `cout << i << endl;`，输出 1。然后 `for` 循环会执行更新表达式，`i` 自增 1，变为 2，再次进行条件检查，2 明显 \<= 10，因此再次执行循环体，输出 2，然后更新 `i` 为 3，以此类推，直到 `i` 变为 101，条件检查不成立，退出循环。
+
+这段代码也可以使用 `while` 循环来实现：
+
+```cpp
+int i = 1;
+while (i <= 100) {
+    cout << i << endl;
+    i++;
+}
+```
+
+事实上，`for` 循环的三个部分都可以省略来用：
+
+```cpp
+// 省略初始表达式
+int i = 1;
+for (; i <= 100; i++) {
+    cout << i << endl;
+}
+
+// 省略更新表达式
+for (int i = 1; i <= 100;) {
+    cout << i << endl;
+    i++;
+}
+
+// 等价于 while
+int number;
+for (; number != 0;) {
+    // ...逻辑
+}
+
+// 无限循环
+for (;;) {
+    // ...逻辑
+}
+```
+
+## 循环控制语句
+
+### break 退出循环体
+
+循环可以通过 `break` 来退出，因此，我们也可以这样来实现上面 `while` 循环中提到的代码：
+
+```cpp lineNumbers title="main.cpp"
+#include <iostream>
+using namespace std;
+
+int main() {
+    int number;
+
+    while (true) {
+        cout << "请输入一个正数（输入 0 结束）：";
+        cin >> number;
+
+        if (number > 0) {
+            cout << "你输入了正数：" << number << endl;
+        } else if (number < 0) {
+            cout << "请输入正数！" << endl;
+        } else {
+            break;
+        }
+    }
+
+    cout << "程序结束" << endl;
+    return 0;
+}
+```
+
+这段代码中，我们使用了一个无限循环（`while (true) {}`，更常用的无限循环有 `for (;;) {}`），在满足特定条件后使用 `break` 来退出循环。但是，我们在大多数情况下**强烈不建议**这么写，因为 `while` 本身就可以做到这样，同时还能让我们更好的理解。不过，这样的写法在后面某些 **特定场景** 中也会有用处。
+
+### continue 跳过循环体
+
+循环可以通过 `continue` 来跳过当前循环体，继续下一次循环。
+
+```cpp lineNumbers title="main.cpp"
+#include <iostream>
+using namespace std;
+
+int main() {
+    int number;
+
+    while (true) {
+        cout << "请输入一个正数（输入 0 结束）：";
+        cin >> number;
+
+        if (number > 0) {
+            cout << "你输入了正数：" << number << endl;
+            continue;
+        } else if (number < 0) {
+            cout << "请输入正数！" << endl;
+            continue;
+        }
+
+        break;
+    }
+
+    cout << "程序结束" << endl;
+    return 0;
+}
+```
+
+上面的程序中，在非 0 的时候，我们会直接 `continue` 到下一次循环，而不会执行后续的代码，即 `break`。在 number 既不大于 0，也不小于 0（即 number 等于 0）的时候，我们会直接 `break` 到循环外，结束程序。
