@@ -4,6 +4,7 @@
   "root": true,
   "pages": [
     "index",
+    "how_to_ask_questions_the_smart_way",
     "---Git---",
     "git/index",
     "---Markdown---",
