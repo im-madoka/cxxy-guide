@@ -5,6 +5,8 @@
   "pages": [
     "index",
     "about",
+    "---关于计协---",
+    "cs/constitution",
     "---比赛---",
     "competition/index",
     "competition/lanqiao"
