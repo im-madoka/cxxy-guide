@@ -18,11 +18,13 @@ export default function Layout({ children }: LayoutProps<"/">) {
   return (
     <html lang="zh_CN" className={inter.className} suppressHydrationWarning>
       <head>
-        <script
-          defer
-          src="https://analytics.mcf.ink/script.js"
-          data-website-id="96b31d4c-9d01-491b-9afa-fc0591a285ac"
-        ></script>
+        {process.env.NODE_ENV === "production" ? (
+          <script
+            defer
+            src="https://analytics.mcf.ink/script.js"
+            data-website-id="96b31d4c-9d01-491b-9afa-fc0591a285ac"
+          ></script>
+        ) : null}
       </head>
       <body className="flex flex-col min-h-screen">
         <RootProvider>{children}</RootProvider>
