@@ -1,0 +1,126 @@
+---
+title: 函数重载
+description: 让同一个函数名执行不同的操作
+---
+
+在前面的学习中，我们了解了函数的基本概念和使用方法。但是你有没有想过这样一个问题：如果我想要实现两个整数相加、两个浮点数相加，以及三个整数相加的功能，是不是需要定义三个不同名称的函数呢？
+
+```cpp
+int addTwoInt(int a, int b) {
+    return a + b;
+}
+
+double addTwoDouble(double a, double b) {
+    return a + b;
+}
+
+int addThreeInt(int a, int b, int c) {
+    return a + b + c;
+}
+```
+
+这样虽然可以实现功能，但是函数名变得复杂，而且不够直观。在 C++ 中，我们可以使用**函数重载**来解决这个问题。（当然，前两种情况也可以用 C++ 的模板来实现，这点我们以后会讲）
+
+## 什么是函数重载
+
+**函数重载**（Function Overloading）是指在同一个作用域内，可以定义多个名称相同但参数不同的函数。编译器会根据调用时传入的参数类型、个数或顺序来自动选择合适的函数版本。
+
+简单来说，函数重载让我们可以用同一个函数名来处理不同类型或不同数量的参数，让代码更加简洁和直观。
+要构成函数重载，必须满足以下条件：
+
+1. **函数名相同**
+2. **参数列表不同**，包括：
+   - 参数的个数不同
+   - 参数的类型不同
+   - 参数的顺序不同
+
+<Callout type="warn">
+    **注意**
+
+    **仅返回类型不同不能构成函数重载**。因为在调用函数时，编译器无法仅根据返回类型来确定调用哪个函数。
+
+    ```cpp
+    int func(int a);     // ✅ 合法
+    double func(int a);  // ❌ 错误！仅返回类型不同，不能重载
+    ```
+</Callout>
+
+让我们用加法函数例子来演示函数重载：
+
+```cpp lineNumbers title="main.cpp"
+#include <iostream>
+using namespace std;
+
+// 两个整数相加
+int add(int a, int b) {
+    cout << "调用了 int add(int, int)" << endl;
+    return a + b;
+}
+
+// 两个浮点数相加
+double add(double a, double b) {
+    cout << "调用了 double add(double, double)" << endl;
+    return a + b;
+}
+
+// 三个整数相加
+int add(int a, int b, int c) {
+    cout << "调用了 int add(int, int, int)" << endl;
+    return a + b + c;
+}
+
+int main() {
+    cout << add(5, 3) << endl;           // 调用 int add(int, int)
+    cout << add(2.5, 3.7) << endl;      // 调用 double add(double, double)
+    cout << add(1, 2, 3) << endl;       // 调用 int add(int, int, int)
+
+    return 0;
+}
+```
+
+## 函数重载的匹配规则
+
+当调用重载函数时，编译器按照以下优先级顺序来选择最匹配的函数：
+
+1. **精确匹配**：参数类型完全相同
+2. **类型提升匹配**：如 `char` 自动提升为 `int`
+3. **标准类型转换匹配**：如 `int` 转换为 `double`
+4. **用户定义的类型转换匹配**
+
+```cpp lineNumbers title="main.cpp"
+#include <iostream>
+using namespace std;
+
+void func(int a) {
+    cout << "func(int): " << a << endl;
+}
+
+void func(double a) {
+    cout << "func(double): " << a << endl;
+}
+
+int main() {
+    func(42);        // 精确匹配 func(int)
+    func(3.14);      // 精确匹配 func(double)
+    func('A');       // 类型提升：char -> int，调用 func(int)
+
+    return 0;
+}
+```
+
+<Callout>
+    使用重载函数一定要是否会造成重载的冲突，例如下列函数：
+
+    ```cpp
+    void func(int a) { }
+    void func(int a, int b = 10) { }
+
+    int main() {
+        func(5, 3);  // ✅ 调用 func(int, int)
+        // func(5);  // ❌ 歧义！可以调用 func(int) 或 func(int, int = 10)
+        return 0;
+    }
+    ```
+
+    在使用重载函数时，一定要确保不会出现歧义，部分情况编译器会报错，还一部分情况会造成代码的不确定性。
+</Callout>
