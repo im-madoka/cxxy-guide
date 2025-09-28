@@ -22,6 +22,8 @@
     "---函数---",
     "functions/index",
     "functions/overload",
-    "functions/recursion_iteration"
+    "functions/recursion_iteration",
+    "---数组与指针---",
+    "pointer/array"
   ]
 }
