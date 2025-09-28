@@ -48,4 +48,5 @@ export const baseOptions: BaseLayoutProps = {
       ],
     },
   ],
+  githubUrl: "https://github.com/im-madoka/cxxy-guide",
 };
