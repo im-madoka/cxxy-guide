@@ -25,6 +25,8 @@
     "functions/recursion_iteration",
     "---数组与指针---",
     "pointer/array",
-    "pointer/pointer"
+    "pointer/pointer",
+    "pointer/stack_and_heap",
+    "pointer/reference"
   ]
 }
