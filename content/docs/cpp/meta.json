@@ -27,6 +27,7 @@
     "pointer/array",
     "pointer/pointer",
     "pointer/stack_and_heap",
-    "pointer/reference"
+    "pointer/reference",
+    "pointer/common_problems"
   ]
 }
