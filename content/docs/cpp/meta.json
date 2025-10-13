@@ -28,6 +28,8 @@
     "pointer/pointer",
     "pointer/stack_and_heap",
     "pointer/reference",
-    "pointer/common_problems"
+    "pointer/common_problems",
+    "---面向对象---",
+    "object/index"
   ]
 }
