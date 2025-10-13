@@ -1,0 +1,373 @@
+---
+title: 类和对象
+description: 了解类和对象的概念，学习如何定义类和创建对象。
+---
+
+在前面的学习中，我们已经接触过**结构体**（struct），它可以把不同类型的数据组合在一起，形成一个新的复合数据类型。结构体让我们可以更好地组织和管理相关的数据，比如存储一个人的姓名、年龄和性别。
+
+但是，随着程序越来越复杂，仅仅用结构体来组织数据已经不够了。我们希望不仅能存储数据，还能把**操作这些数据的方法**也封装在一起。这样，数据和操作就能形成一个整体，更加安全、灵活，也更容易维护。这就是**面向对象编程**的思想。
+
+而**类（class）**就是面向对象编程的核心概念。类是一种用户自定义的数据类型，它不仅包含数据成员（属性），还包含成员函数（方法），用于操作这些数据。通过类，我们可以创建多个对象，每个对象都有自己的属性和行为。
+
+<Callout>
+    **注意**
+
+    在 C++ 中，结构体也可以添加成员函数，但是他和 class 有一些细微的区别，会在下文提到。
+</Callout>
+
+## 类的定义和对象的创建
+
+定义类的语法如下：
+
+```cpp
+class ClassName {
+public: // 访问权限（公共属性/方法）
+    // 数据成员（属性）
+    int attribute1;
+    float attribute2;
+    // ...
+    // 成员函数（方法）
+    void method1() {
+        // 方法实现
+    }
+private: // 访问权限（私有属性/方法）
+    // 私有数据成员和方法
+    int privateAttribute;
+    void privateMethod() {
+        // 私有方法实现
+    }
+};
+```
+
+还是拿之前章节结构体的例子，定义一个存储个人信息的东西，一个人可能有年龄（整数），姓名（字符串），性别（因为只有 `男` `女` 两个值，所以可以用布尔型。可以这样来定义：
+
+```cpp
+class Person {
+    int age;
+    std::string name;
+    bool gender; // 性别，0 表示男，1 表示女
+};
+```
+
+看似乎和结构体没什么区别，只不过把 `struct` 换成了 `class`。但是，类和结构体有一个重要的区别：**默认的访问权限不同**。在结构体中，成员默认是 `public`（公共的），而在类中，成员默认是 `private`（私有的）。这意味着，在类中定义的属性和方法，默认情况下只能在类的内部访问，而不能在类的外部直接访问：
+
+```cpp
+class Person {
+    int age;
+    std::string name;
+    bool gender;
+};
+
+struct PersonStruct {
+    int age;
+    std::string name;
+    bool gender;
+};
+
+int main() {
+    Person p;
+    // p.age = 20; // ❌ 错误，age 是私有的，不能在类外部访问
+
+    PersonStruct ps;
+    ps.age = 20; // ✅ 正确，age 是公共的，可以在结构体外部访问
+    return 0;
+}
+```
+
+当然，你也可以手动在 class 中指定 `public` 访问权限，这样就可以在类的外部访问这些成员了：
+
+```cpp
+class Person {
+public:
+    int age;
+    std::string name;
+    bool gender;
+};
+
+int main() {
+    Person p;
+    p.age = 20; // ✅ 正确，age 是公共的，可以在类外部访问
+    return 0;
+}
+```
+
+<Callout>同样也可以在 struct 中指定 `private` 访问权限来使得成员不能被外部访问。</Callout>
+
+当然，从上述的例子中，我们也看到了对象是如何创建的：
+
+```cpp
+ClassName objectName; // 创建一个 ClassName 类型的对象
+ClassName objectName2; // 创建另一个 ClassName 类型的对象
+ClassName* objectPtr = new ClassName(); // 创建一个 ClassName 类型的对象，并返回指向该对象的指针
+```
+
+## 成员函数（方法）
+
+让我们接着 Person 类继续。我们还是以默认 private 的方式来定义 Person，因为默认别人是无法知道你的年龄、姓名和性别（？）的。
+
+但是有时候我们又希望能在类的外部访问这些属性，比如打印一个人的信息。怎么办呢？这时我们就可以通过**成员函数**（方法）来操作这些私有（或者公有）属性。
+
+```cpp
+class Person {
+private:
+    int age;
+    std::string name;
+    bool gender;
+public:
+    std::string getName() {
+        return this->name;
+    }
+}
+
+int main() {
+    Person p;
+    // p.name = "张三"; // ❌ 错误，name 是私有的，不能在类外部访问
+    std::cout << p.getName(); // ✅ 正确，通过成员函数访问 name
+    return 0;
+}
+```
+
+在上面的例子中，我们定义了一个 `getName` 方法，用于返回 `name` 属性的值。这样，虽然 `name` 是私有的，不能直接访问，但我们可以通过 `getName` 方法来获取它的值。
+
+上例中，`this` 指针是一个特殊的隐含的参数，**指向调用该方法的对象本身**。通过 `this->name`，我们可以访问当前对象的 `name` 属性。
+
+<Callout>
+    **Tips**
+
+    `->` 是 C++ 中的成员访问运算符，用于通过指针访问对象的成员。`this` 是一个指向当前对象的指针，所以 `this->name` 表示访问当前对象的 `name` 属性。而 `.` 运算符用于通过对象本身访问成员，比如 `p.getName()`。`p->` 表示“指针 p 指向的对象的成员”，其实等价于 `(*p).成员`
+
+    比如：
+
+    ```cpp
+    Person* p = new Person();
+    (*p).age = 18;      // 等价于 p->age = 18;
+    (*p).sayHello();    // 等价于 p->sayHello();
+    ```
+</Callout>
+
+面向对象编程强调**封装**（Encapsulation），即把数据和操作封装在一起，隐藏内部实现细节，只暴露必要的接口。这样可以保护数据的完整性，防止外部代码随意修改对象的状态。在上述例子中，外部对象可以得到 name，但是却无法对 name 进行修改。这就是封装的好处。
+
+还有一种先定义类，然后再定义成员函数的写法：
+
+```cpp
+class Person {
+private:
+    int age;
+    std::string name;
+    bool gender;
+public:
+    std::string getName(); // 只声明，不定义
+};
+
+// 在类外定义成员函数
+std::string Person::getName() {
+    return this->name;
+}
+```
+
+这种写法在类比较大，成员函数比较多时，可以让代码更清晰。同时，在工程化开发中，我们会分开类的声明和实现，这点会在以后的工程化实践章节中详细讲解，这里不多做赘述。
+
+## 构造函数和析构函数
+
+### 构造函数
+
+在类中，我们有时候希望在创建对象时进行一些初始化操作，比如给属性赋初值。为此，C++ 提供了**构造函数**（Constructor）的概念。
+
+构造函数是一种特殊的成员函数，它的名称与类名相同，没有返回值（甚至没有 `void`），并且可以有参数。构造函数在创建对象时自动调用，用于初始化对象的属性。
+
+```cpp
+class Person {
+private:
+    int age;
+    std::string name;
+    bool gender;
+public:
+    // 构造函数
+    Person(int a, std::string n, bool g) {
+        age = a;
+        name = n;
+        gender = g;
+    }
+
+    std::string getName() {
+        return this->name;
+    }
+};
+
+int main() {
+    Person p(20, "张三", 0); // 创建对象时调用构造函数
+    std::cout << p.getName(); // 输出：张三
+    return 0;
+}
+```
+
+在上面的例子中，我们定义了一个带参数的构造函数 `Person(int a, std::string n, bool g)`，用于初始化 `age`、`name` 和 `gender` 属性。当我们创建 `Person` 对象时，传入相应的参数，构造函数会自动被调用，完成属性的初始化。
+
+而我们还可以通过初始化列表来初始化属性：
+
+```cpp
+class Person {
+private:
+    int age;
+    std::string name;
+    bool gender;
+public:
+    // 构造函数，使用初始化列表
+    Person(int a, std::string n, bool g) : age(a), name(n), gender(g) {
+        // 构造函数体，可以执行其他初始化操作，例如输出日志等等。
+    }
+
+    // ...其他成员函数...
+};
+```
+
+当然，我们也可以定义**无参构造函数**，用于创建对象时不需要传入参数：
+
+```cpp
+class Person {
+private:
+    int age;
+    std::string name;
+    bool gender;
+public:
+    // 无参构造函数
+    Person() {
+        age = 0;
+        name = "未知";
+        gender = 0; // 默认男
+    }
+    // ...其他成员函数...
+};
+```
+
+如果我们没有定义任何构造函数，C++ 会自动生成一个默认的无参构造函数，用于初始化对象的属性（通常是默认值）。但是一旦我们定义了带参数的构造函数，默认的无参构造函数就不会再自动生成了。如果需要无参构造函数，就必须手动定义。
+
+当然，我们也可以通过重载函数同时定义无参和有参构造函数：
+
+```cpp
+class Person {
+private:
+    int age;
+    std::string name;
+    bool gender;
+public:
+    // 无参构造函数
+    Person() : age(0), name("未知"), gender(0) {}
+    // 带参数的构造函数
+    Person(int a, std::string n, bool g) : age(a), name(n), gender(g) {}
+    // ...其他成员函数...
+};
+```
+
+#### explicit 关键字
+
+`explicit` 是 C++ 的一个关键字，用在**构造函数**前面，表示“显式”的意思。它的作用是**禁止编译器进行隐式类型转换**，防止一些意外的自动转换带来的 bug。
+
+例如：
+
+```cpp
+class Person {
+public:
+    int age;
+    Person(int a) : age(a) {}
+};
+
+void printPerson(Person p) {
+    std::cout << p.age << std::endl;
+}
+
+int main() {
+    printPerson(18); // 这里会自动把 18 转成 Person(18)
+}
+```
+
+在上面的例子中，`printPerson` 函数接受一个 `Person` 类型的参数，但是我们传入了一个整数 `18`。编译器会自动调用 `Person(int a)` 构造函数，把 `18` 转换成一个 `Person` 对象。这种隐式转换有时候会导致一些意外的行为，尤其是在复杂的代码中。
+
+而如果我们在构造函数前加上 `explicit` 关键字：
+
+```cpp
+class Person {
+public:
+    int age;
+    explicit Person(int a) : age(a) {}
+};
+
+void printPerson(Person p) {
+    std::cout << p.age << std::endl;
+}
+
+int main() {
+    // printPerson(18); // ❌ 编译错误，不能隐式转换
+    printPerson(Person(18)); // ✅ 必须显式构造
+}
+```
+
+只有你**明确地写出构造对象**，编译器才会允许。否则就会报错。
+
+在实际开发中，建议对于单参数的构造函数都加上 `explicit`，以防止意外的隐式转换。而如果你需要允许隐式转换，或者是多参数的情况下，可以不加 `explicit`。
+
+#### 拷贝构造函数
+
+拷贝构造函数用于用一个同类型对象初始化另一个对象。
+
+```cpp
+class Person {
+public:
+    int age;
+    Person(const Person& other) {
+        age = other.age;
+    }
+};
+```
+
+### 析构函数
+
+与构造函数相对应的，还有**析构函数**（Destructor）。析构函数也是一种特殊的成员函数，它的名称与类名相同，但前面加上一个波浪号 `~`，没有参数和返回值。析构函数在对象**生命周期结束**时自动调用，用于释放对象占用的资源，比如动态分配的内存、文件句柄等。
+
+```cpp
+class Person {
+public:
+    ~Person() {
+        // 析构函数体
+        std::cout << "对象被销毁啦！" << std::endl;
+    }
+};
+```
+
+析构函数会在这些时候被调用：
+
+- 当对象**离开作用域**（比如函数结束、代码块结束）
+- 当对象被**delete**（对于用 new 创建的对象）
+- 程序结束时，全局对象会被销毁
+
+我们可以在析构函数中执行一些清理操作，确保资源被正确释放，防止内存泄漏等问题。例如：
+
+```cpp
+class MyArray {
+public:
+    int* data;
+    MyArray(int size) {
+        data = new int[size]; // 动态分配内存
+    }
+    ~MyArray() {
+        delete[] data; // 释放内存
+        std::cout << "内存已释放" << std::endl;
+    }
+};
+
+int main() {
+    MyArray arr(10); // 构造函数分配内存
+    // ...使用 arr
+} // 这里自动调用析构函数，释放内存
+```
+
+在上面的例子中，`MyArray` 类在构造函数中动态分配了一块内存用于存储整数数组，而在析构函数中释放了这块内存，确保不会发生内存泄漏。（当然，我们不推荐手动管理内存，推荐使用智能指针。）
+
+<Callout type="warn">
+    **注意**
+
+    - 析构函数不能有参数，也没有返回值。
+    - 一个类只能有一个析构函数。
+    - 如果你不写，编译器会自动生成一个默认的析构函数（什么都不做）。
+    - 如果你的类有资源需要手动释放（比如 new/malloc），**一定要写析构函数**，否则会内存泄漏。
+</Callout>
