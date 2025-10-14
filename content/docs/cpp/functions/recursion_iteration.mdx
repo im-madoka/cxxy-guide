@@ -19,20 +19,22 @@ description: 学习递归与迭代的思想
 
 以阶乘为例，阶乘的数学定义如下：
 
-$$$
+```math
 n! = n \times (n-1) \times (n-2) \times \dots \times 2 \times 1
-$$$
+```
 
 用递归的概念来表示就是：
 
-$$$
+```math
+\begin{gather*}
 n! = n \times (n-1)! \\
 (n-1)! = (n-1) \times (n-2)! \\
 (n-2)! = (n-2) \times (n-3)! \\
 \vdots \\
 2! = 2 \times 1! \\
 1! = 1
-$$$
+\end{gather*}
+```
 
 我们可以使用下面的代码来实现阶乘：
 
