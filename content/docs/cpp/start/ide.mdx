@@ -35,7 +35,79 @@ import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
 下面我们简单介绍几个主流 IDE/编辑器 的安装
 
-<Tabs items={["Visual Studio", "Clion", "Xcode", "VSCode", "Zed"]}>
+<Tabs items={["Zed", "Visual Studio", "Clion", "Xcode", "VSCode"]}>
+    <Tab>
+        ## Zed (`MacOS`/`Linux`/`Windows`)
+
+        Zed 是一款新兴的跨平台、低占用、简洁、高效的开源代码编辑器，由前 Atom 团队呈现，支持实时协作和云端存储，适合团队开发和远程工作。
+
+        <Callout type="warn">Zed 目前还没有进入正式版，所以可能部分功能支持不完善或有 Bug。如果遇到问题，或有需要的功能，可以去 zed 的官方 [Github 仓库](https://github.com/zed-industries/zed) 提交 [Issues](https://github.com/zed-industries/zed/issues)</Callout>
+
+        <Callout>本节教的是单文件编译的配置，适合 OI 竞赛或新手学习使用。项目的配置在后面工业化章节中可能会提到。</Callout>
+
+        1. 登陆官方网站 https://zed.dev ，点击 `Download now` 按钮，选择对应的系统版本进行下载。（Linux 用户可以使用系统自带的包管理器进行安装）
+
+           ![Zed Download](./images/zed/1.png)
+
+        2. 下载并安装完成后，打开 Zed。
+
+           ![Zed Open](./images/zed/2.png)
+
+        3. 点击 `Open Repository` 按钮，选择一个空白的文件夹作为工作区（或者是打开已有的文件目录）。
+
+           ![Open Repository](./images/zed/3.png)
+
+           在左侧的文件树中，右键点击空白处，选择 `New File` 创建一个新的文件，命名为 `test.cpp`。
+
+           ![New File](./images/zed/4.png)
+           ![Rename File](./images/zed/5.png)
+
+        4. 在根目录再次新建文件 `.clangd`，配置 clangd（C++ 的语言服务器，用于 IDE 自动补全使用）
+
+           例如，我想使用 C++ 23 的标准，可以在 `.clangd` 中写入以下内容：
+
+           ```
+           CompileFlags:
+             Add:
+               - -std=c++23
+           ```
+
+           具体配置可以参考 [Clangd 官方文档](https://clangd.llvm.org/config.html)。
+
+        5. 点击顶部菜单上的 `Run` > `Edit tasks.json` （Windows 和 Linux 可能会隐藏在左上角 `三` 里）
+
+           ![Edit tasks.json](./images/zed/6.png)
+
+        6. 在打开的 `tasks.json` 文件中，添加以下内容：
+
+           ```json title="tasks.json"
+           [
+             {
+               "label": "Build Active CPP File",
+               "command": "if [ ! -d \"output\" ]; then mkdir output; fi; g++ -std=c++23 -g \"$ZED_FILE\" -o \"output/$ZED_FILENAME\"; if [ $? -eq 0 ]; then echo Build succeeded; ./output/$ZED_FILENAME; else echo Build failed; fi",
+               "use_new_terminal": false,
+               "allow_concurrent_runs": false,
+               "reveal": "always",
+               "reveal_target": "dock",
+               "hide": "never",
+               "shell": "system",
+               "show_summary": true,
+               "show_command": true
+             }
+           ]
+           ```
+
+           <Callout>其中 `--std=c++23` 为 C++ 标准，你可以把他修改为你想要的标准，比如 `c++17`, `c++26` 等等。</Callout>
+
+        7. 保存 `tasks.json` 文件，回到 `test.cpp`，编写你的 C++ 代码。
+
+           ![Write Code](./images/zed/7.png)
+
+        8. 点击顶部菜单的 `Run` > `Spawn Task` > `Build Active CPP File` (或者使用快捷键启动 `Spawn Task`)，Zed 会自动编译并运行你的代码。
+
+           ![Spawn Task](./images/zed/8.png)
+           ![Run Code](./images/zed/9.png)
+    </Tab>
     <Tab>
         ## Visual Studio 2022 (`Windows`)
 
@@ -97,11 +169,6 @@ import { Tab, Tabs } from "fumadocs-ui/components/tabs";
     </Tab>
     <Tab>
         ## Visual Studio Code (`Windows`/`MacOS`/`Linux`/`Web`)
-
-        `WIP`
-    </Tab>
-    <Tab>
-        ## Zed (`MacOS`/`Linux`/`Windows 未完全支持`)
 
         `WIP`
     </Tab>
