@@ -1,0 +1,139 @@
+---
+title: 封装
+description: 了解封装的概念，学习如何使用访问权限来保护类的
+---
+
+在上一节中我们简单的提到了一下封装的概念，这是面向对象编程的三大特性之一。本节讲重点介绍封装的概念。
+
+封装是指**把数据和操作数据的方法组合在一起**，并且**隐藏内部的实现细节，只暴露必要的接口**。这样可以保护对象的数据不被外部随意修改，提高代码的安全性和可维护性。在 C++ 中，封装主要通过**访问权限控制**来实现。
+
+## 访问权限
+
+C++ 提供了三种访问权限关键字：
+
+- `public`：公共成员，可以在类的外部访问。
+- `private`：私有成员，只能在类的内部访问，外部无法直接访问。
+- `protected`：受保护成员，只能在类的内部和子类（后面会详细介绍）中访问，外部无法直接访问。
+
+成员的访问权限决定了外部代码是否能直接访问这些成员。
+
+```cpp lineNumbers title="main.cpp"
+#include <iostream>
+#include <string>
+
+class Person {
+private:
+    int age;               // 私有属性
+    std::string name;      // 私有属性
+
+public:
+    void setAge(int a) {   // 公共方法
+        if (a >= 0 && a <= 150) {
+            age = a;
+        } else {
+            std::cout << "年龄不合法！" << std::endl;
+        }
+    }
+
+    int getAge() {         // 公共方法
+        return age;
+    }
+
+    std::string getName() {
+        return name;
+    }
+};
+
+int main() {
+    Person p;
+    // p.age = 30; // ❌ 错误，age 是私有的，不能直接访问
+    p.setAge(30); // ✅ 正确，通过公共方法设置 age
+    std::cout << p.getName() << " " << p.getAge() << std::endl; // 输出：30
+    return 0;
+}
+```
+
+上面例子中，我们可以通过 setAge 和 getAge 方法来设置和获取一个私有的属性。我们称这种函数为 setter/getter 方法。通过 setter/getter 方法，可以在设置属性时进行合法性检查，防止数据被随意修改，保证对象的状态始终有效。
+
+`protected` 权限较为特殊。他可以在类的内部访问，也可以在派生类中访问，但不能在类的外部访问。下面是一个例子：
+
+```cpp lineNumbers title="main.cpp"
+#include <iostream>
+#include <string>
+
+class Animal {
+protected:
+    std::string name;
+public:
+    void setName(std::string n) { name = n; }
+};
+
+/// 下面的 Dog 就是 Animal 的派生类
+/// 在下面的章节中我们会详细介绍继承的概念
+class Dog : public Animal {
+public:
+    void bark() {
+        std::cout << name << " 汪汪叫！" << std::endl; // ✅ 子类可以访问 protected 成员
+    }
+};
+
+int main() {
+    Dog d;
+    d.setName("小黑");
+    d.bark(); // 输出：小黑 汪汪叫！
+    // d.name = "小白"; // ❌ 错误，外部不能访问 protected 成员
+    return 0;
+}
+```
+
+## 友元函数
+
+上面的访问权限控制虽然能保护类的成员不被外部随意访问，但有时我们也的确需要某些特定的函数或类能够访问类中的私有成员。C++ 提供了**友元函数**和**友元类**的概念来实现这一点。
+
+若要定义一个友元函数或者友元类，我们只需要在类的内部（任意位置，public/private/protected 都可以）定义用 `friend` 关键字声明函数或类即可。例如：
+
+```cpp lineNumbers title="main.cpp"
+#include <iostream>
+
+class Box {
+private:
+   int content;
+public:
+    Box(double c) : content(c) {}
+
+    friend void printContent(Box box); // 声明友元函数
+    friend class BoxGetter;          // 声明友元类
+}
+
+void printContent(Box box) {
+    std::cout << "盒子里的内容是: " << box.content << std::endl; // ✅ 友元函数可以访问私有成员
+}
+
+class BoxGetter {
+public:
+    int getContent(Box box) {
+        return box.content; // ✅ 友元类可以访问私有成员
+    }
+};
+
+int main() {
+    Box b(42);
+    printContent(b); // 输出：盒子里的内容是: 42
+
+    BoxGetter bg;
+    std::cout << "通过友元类获取内容: " << bg.getContent(b) << std::endl; // 输出：通过友元类获取内容: 42
+    return 0;
+}
+```
+
+上例中，`printContent` 函数和 `BoxGetter` 类都被声明为 `Box` 类的友元，因此它们可以访问 `Box` 类的私有成员 `content`。
+
+通过封装和访问权限控制，我们可以更好地保护类的内部状态，防止外部代码随意修改对象的数据，提高代码的安全性和可维护性。在实际编程中，合理使用封装是编写高质量代码的重要原则之一。
+
+<Callout type="warn">
+    **注意**
+
+    - 友元函数破坏了封装性，**不要滥用**，只在必要时使用。
+    - 友元关系不能被继承，子类不会自动拥有父类的友元。
+    - 友元函数只是访问权限上的特殊，不是成员函数，**不能直接用 `this` 指针**。
+</Callout>
