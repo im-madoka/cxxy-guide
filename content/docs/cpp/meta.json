@@ -29,6 +29,7 @@
     "pointer/stack_and_heap",
     "pointer/reference",
     "pointer/common_problems",
+    "pointer/string",
     "---面向对象---",
     "object/index",
     "object/class_and_object",
