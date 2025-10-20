@@ -1,0 +1,130 @@
+---
+title: 多态
+---
+
+多态的字面意思是“多种形态”。在 C++ 中，多态指的是**同一个接口（函数名），可以有不同的实现**，具体调用哪一个实现，要看对象的实际类型。
+
+举个例子：“动物”都会“叫”，但不同的动物叫声不同。我们可以用同一个 `speak()` 方法，让狗“汪汪叫”，猫“喵喵叫”。
+
+多态让我们可以**面向基类编程**，写出更通用、更灵活的代码。例如：
+
+- 定义一个“动物”数组，里面可以存放各种动物（狗、猫、鸟等），统一调用 `speak()`，每个动物表现出自己的行为。
+- 扩展新动物时，无需修改原有代码，只需新增一个类即可。
+
+多态分为两类：
+
+- **编译时多态**（静态多态）：如函数重载、运算符重载（后续章节会讲）。
+- **运行时多态**（动态多态）：通过**虚函数**和**基类指针/引用**实现，是本节重点。
+
+## 虚函数
+
+在 C++ 中，要实现运行时多态，需要用到**虚函数（virtual function）**。
+
+在基类的方法前加上 `virtual` 关键字，表示这个方法可以被子类重写，并且支持多态。
+
+```cpp
+class Test {
+public:
+    virtual void a() {
+        /* */
+    }
+};
+```
+
+我们拿上面的“动物叫声”例子来演示多态：
+
+```cpp lineNumbers title="main.cpp"
+#include <iostream>
+using namespace std;
+
+class Animal {
+public:
+    virtual void speak() {
+        cout << "动物在叫" << endl;
+    }
+};
+
+class Dog : public Animal {
+public:
+    void speak() override { // override 可选，表示重写
+        cout << "狗在汪汪叫" << endl;
+    }
+};
+
+class Cat : public Animal {
+public:
+    void speak() override {
+        cout << "猫在喵喵叫" << endl;
+    }
+};
+
+void makeSound(Animal* a) {
+    a->speak(); // 调用的是实际对象的 speak()
+}
+
+int main() {
+    Dog d;
+    Cat c;
+    makeSound(&d); // 输出：狗在汪汪叫
+    makeSound(&c); // 输出：猫在喵喵叫
+    return 0;
+}
+```
+
+在上面的例子中，我们定义了一个基类 `Animal`，它有一个虚函数 `speak()`。然后，我们定义了两个派生类 `Dog` 和 `Cat`，它们都重写了 `speak()` 方法。此时，我们可以通过基类指针 `Animal*` 来调用 `speak()`，实际调用的是对象的类型对应的方法，实现了多态。
+
+<Callout>
+    **Tips**
+
+    - `override` 关键字是 C++11 新增的，用于标记重写父类虚函数，建议加上，可以防止写错函数签名。
+    - 虚函数必须通过**指针或引用**调用，才能实现多态。如果用对象直接调用，还是静态绑定：
+
+      ```cpp
+      Dog d;
+      Animal a = d; // 切片，a 是 Animal 类型
+      d.speak(); // 调用 Dog::speak()
+      a.speak(); // 调用 Animal::speak()
+      ```
+</Callout>
+
+如果基类有虚函数，**析构函数也应该声明为虚函数**，否则通过基类指针删除子类对象时，可能不会调用子类的析构函数，导致资源泄漏。
+
+```cpp
+class Animal {
+public:
+    virtual ~Animal() {
+        cout << "Animal 析构" << endl;
+    }
+};
+```
+
+## 纯虚函数与抽象类
+
+有时候，基类的方法没有具体实现，只是规定子类必须实现，这时可以在类中定义**纯虚函数**。这种类可以称为**抽象类**。
+
+```cpp
+class Animal {
+public:
+    virtual void speak() = 0; // 纯虚函数
+};
+```
+
+**抽象类不能实例化对象，只能被继承**。
+
+```cpp
+class Dog : public Animal {
+public:
+    void speak() override {
+        cout << "狗在汪汪叫" << endl;
+    }
+};
+
+int main() {
+    // Animal a; // ❌ 错误，抽象类不能实例化
+    Dog d;      // ✅ 正确
+    d.speak();
+    return 0;
+}
+```
+
+在实际工程开发中，合理利用多态，可以大幅提高代码的复用性和可维护性。
