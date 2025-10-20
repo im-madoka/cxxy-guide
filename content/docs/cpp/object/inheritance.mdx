@@ -1,0 +1,220 @@
+---
+title: 继承
+description: 了解继承的基本概念、语法和使用方法。
+---
+
+在面向对象编程中，**继承（Inheritance）**是三大特性之一（另外两个是封装和多态）。继承让我们可以**基于已有的类创建新类**，实现代码的复用和扩展。
+
+继承的本质是：**子类（派生类）自动拥有父类（基类）的属性和方法**，并且可以在此基础上增加新的成员或重写已有的方法。
+
+举个生活中的例子：
+
+- “动物”有名字、年龄，会“吃饭”、“睡觉”。
+- “狗”是一种动物，除了拥有动物的属性和行为，还可以“汪汪叫”。
+- “猫”也是动物，也有自己的特殊行为，比如“喵喵叫”。
+
+我们可以把“动物”定义为一个**基类**（父类），而“狗”、“猫”则是**派生类**（子类），它们继承了“动物”的属性和方法，同时又有自己的特色。
+
+## 继承的语法
+
+C++ 中定义继承的语法如下：
+
+```cpp
+class 派生类名 : 继承方式 基类名 {
+    // 新增的成员
+};
+```
+
+其中，**继承方式**可以是 `public`、`protected` 或 `private`，最常用的是 `public`。
+
+C++ 支持三种继承方式：
+
+- `public` 继承：父类的 `public` 成员变成子类的 `public` 成员，`protected` 还是 `protected`，父类的 `private` 不可访问。
+- `protected` 继承：父类的 `public` 和 `protected` 成员都变成子类的 `protected` 成员，`private` 不可访问。
+- `private` 继承：父类的所有成员都变成子类的 `private` 成员，`private` 依然不可访问。
+
+让我们回到上面的例子。 我们可以定义一个基类 `Animal`，然后定义两个派生类 `Dog` 和 `Cat`：
+
+```cpp lineNumbers title="main.cpp"
+#include <print>
+#include <string>
+
+class Animal {
+private:
+    bool alive = true;
+protected:
+    std::string name;
+    int age;
+public:
+    Animal(std::string n, int a) : name(n), age(a) {}
+
+    void eat() {
+        std::println("{} 在吃饭", this->name);
+    }
+
+    void is_alive() {
+        if (this->alive) {
+            std::println("{} 是活的", this->name);
+        } else {
+            std::println("{} 已经死了", this->name);
+        }
+    }
+};
+
+class Dog : public Animal {
+public:
+    Dog(std::string n, int a) : Animal(n, a) {}
+
+    void bark() {
+        std::println("{} 正在汪汪叫", this->name);
+    }
+
+    // Dog 可以访问 age 和 name，但是不能访问 alive
+};
+
+class Cat : public Animal {
+public:
+    Cat(std::string n, int a) : Animal(n, a) {}
+
+    void meow() {
+        std::println("{} 正在喵喵叫", this->name);
+    }
+}
+
+int main() {
+    Dog dog("小黑", 3);
+    Cat cat("小白", 2);
+
+    dog.eat();       // 输出：小黑 在吃饭
+    dog.bark();      // 输出：小黑 正在汪汪叫
+    dog.is_alive();  // 输出：小黑 是活的
+    cat.eat();       // 输出：小白 在吃饭
+    cat.meow();      // 输出：小白 正在喵喵叫
+    cat.is_alive();  // 输出：小白 是活的
+
+    // cat.bark(); // ❌ 错误，Cat 没有 bark 方法
+
+    return 0;
+}
+```
+
+## 构造函数与继承
+
+子类对象在创建时，会**先调用基类的构造函数**，再调用子类自己的构造函数。这样可以保证基类部分先初始化好。
+
+如果基类有带参数的构造函数，子类需要在自己的构造函数中**通过初始化列表**调用基类构造函数：
+
+```cpp
+class Animal {
+public:
+    string name;
+    Animal(string n) : name(n) {
+        cout << "Animal 构造：" << name << endl;
+    }
+};
+
+class Dog : public Animal {
+public:
+    Dog(string n) : Animal(n) {
+        cout << "Dog 构造：" << name << endl;
+    }
+};
+
+int main() {
+    Dog d("小白");
+    return 0;
+}
+```
+
+输出：
+
+```
+Animal 构造：小白
+Dog 构造：小白
+```
+
+## 方法重写
+
+有时候，子类需要**重新实现**父类的方法，这叫做**重写（Override）**。只需要在子类中定义同名同参数的方法即可。
+
+```cpp
+class Animal {
+public:
+    void speak() {
+        cout << "动物在叫" << endl;
+    }
+};
+
+class Dog : public Animal {
+public:
+    void speak() {
+        cout << "狗在汪汪叫" << endl;
+    }
+};
+
+int main() {
+    Animal a;
+    Dog d;
+
+    a.speak(); // 输出：动物在叫
+    d.speak(); // 输出：狗在汪汪叫
+
+    return 0;
+}
+```
+
+<Callout type="warn">
+    **注意**
+
+    如果用父类指针/引用指向子类对象，默认情况下调用的是父类的方法（静态绑定）。例如：
+
+    ```cpp
+    class Animal {
+    public:
+        void speak() {
+            cout << "动物在叫" << endl;
+        }
+    };
+
+    class Dog : public Animal {
+    public:
+        void speak() {
+            cout << "狗在汪汪叫" << endl;
+        }
+    };
+
+    int main() {
+        Animal* p = new Dog();
+        p->speak(); // 输出什么？
+        return 0;
+    }
+    ```
+
+    你可能希望输出“狗在汪汪叫”，但实际上会输出“动物在叫”。因为 `p` 是 `Animal*` 类型，编译器会根据指针的类型决定调用哪个函数（静态绑定），而不是根据对象的真实类型。
+
+    如果想解决这个问题，需要用 `virtual` 关键字，后面在多态章节中会详细讲解。
+</Callout>
+
+## 多级继承与多重继承
+
+C++ 中又**多级继承**（一个类继承自另一个派生类）和**多重继承**（一个类可以有多个父类）。
+
+### 多级继承
+
+```cpp
+class Animal { /* ... */ };
+class Dog : public Animal { /* ... */ };
+class Husky : public Dog { /* ... */ };
+```
+
+### 多重继承
+
+```cpp
+class A { /* ... */ };
+class B { /* ... */ };
+class C : public A, public B { /* ... */ };
+```
+
+<Callout type="warn">
+    多重继承会带来“二义性”等复杂问题（如菱形继承），初学者建议先掌握单继承，后续有需要再深入学习。
+</Callout>

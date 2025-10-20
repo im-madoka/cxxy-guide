@@ -33,6 +33,7 @@
     "---面向对象---",
     "object/index",
     "object/class_and_object",
-    "object/encapsulation.mdx"
+    "object/encapsulation",
+    "object/inheritance"
   ]
 }
