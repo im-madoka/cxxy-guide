@@ -23,6 +23,7 @@
     "functions/index",
     "functions/overload",
     "functions/recursion_iteration",
+    "functions/lambda",
     "---数组与指针---",
     "pointer/array",
     "pointer/pointer",
