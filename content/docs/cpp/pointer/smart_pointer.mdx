@@ -1,0 +1,79 @@
+---
+title: 智能指针
+description: 现代 C++ 中的内存管理神器
+---
+
+在前面的章节中，我们学习了指针的基本用法，也了解了手动管理内存（new/delete）可能带来的各种“坑”，比如内存泄漏、悬空指针等。随着 C++ 的发展，现代 C++（C++11 及以后）引入了**智能指针**（Smart Pointer），帮助我们更加安全、方便地管理动态内存，极大地减少了内存相关的错误。
+
+**智能指针**本质上是一个类对象，它像普通指针一样可以指向动态分配的内存，但它会自动管理内存的释放。当智能指针离开作用域时，会自动释放它所管理的资源，无需手动调用 `delete`。你可以把智能指针想象成一个“带自动清理功能的指针”，它不仅能指向对象，还能在不需要的时候自动帮你清理掉。这样可以有效避免因为忘记 `delete` 或 `free` 带来的内存泄漏和悬空指针等问题。
+
+C++ 标准库在 `<memory>` 头文件中提供了三种智能指针：
+
+- `std::unique_ptr`：独占所有权的智能指针
+- `std::shared_ptr`：共享所有权的智能指针
+- `std::weak_ptr`：弱引用智能指针（配合 shared_ptr 使用）
+
+## unique_ptr
+
+`unique_ptr` 是最简单的智能指针，表示**独占**所有权。**同一时间只能有一个** `unique_ptr` 指向某块内存，**不能复制，只能移动**。
+
+```cpp
+#include <memory>
+#include <iostream>
+
+int main() {
+    std::unique_ptr<int> p1(new int(42)); // 创建一个 unique_ptr，指向一个整数
+    // std::unique_ptr<int> p2 = p1; // ❌ 错误，不能复制 unique_ptr
+    std::unique_ptr<int> p2 = std::move(p1); // ✅ 正确，使用 std::move 转移所有权
+    // p1 现在为空 (nullptr)，因为所有权已经转移给 p2
+
+    std::cout << *p2 << std::endl; // 输出 42
+
+
+    // 当 p2 离开作用域时，内存会自动释放，而不需要手动 delete
+    return 0;
+}
+```
+
+<Callout>
+    **Tips**
+
+    推荐优先使用 `unique_ptr`，因为它简单高效，能最大程度避免资源泄漏和所有权混乱。
+</Callout>
+
+## shared_ptr
+
+`shared_ptr` 支持**多个指针共享同一块内存**。它内部维护一个引用计数，只有最后一个 `shared_ptr` 被销毁时，才会释放内存。
+
+```cpp lineNumbers title="main.cpp"
+#include <memory>
+#include <iostream>
+
+int main() {
+    std::shared_ptr<int> p1 = std::make_shared<int>(20); // 推荐用 make_shared 分配
+    std::shared_ptr<int> p2 = p1; // 复制所有权，引用计数+1
+
+    std::cout << *p1 << " " << *p2 << std::endl; // 都能访问同一块内存
+
+    std::cout << "引用计数: " << p1.use_count() << std::endl; // 输出 2
+
+    p1.reset(); // p1 释放所有权，但 p2 还在，内存不会被释放
+    std::cout << "引用计数: " << p2.use_count() << std::endl; // 输出 1
+
+    // 最后一个 shared_ptr 离开作用域时，内存自动释放
+    return 0;
+}
+```
+
+<Callout type="warn">
+    **注意**
+
+    - `shared_ptr` 虽然方便，但引用计数的管理有一定开销，性能略低于 `unique_ptr`。
+    - 如果多个对象之间形成循环引用（比如 A 持有 B，B 持有 A），会导致内存无法释放（称为“引用计数环”），此时需要配合 `weak_ptr` 使用。
+</Callout>
+
+### weak_ptr
+
+`weak_ptr` 是一种不参与引用计数的智能指针，常用于解决 `shared_ptr` 的循环引用问题。它只能配合 `shared_ptr` 使用，不能直接访问对象，需要通过 `lock()` 方法获取一个临时的 `shared_ptr`。
+
+智能指针是现代 C++ 推荐的内存管理方式，可以极大地减少内存泄漏和指针相关的 bug。在实际开发中，优先使用 `unique_ptr`，需要共享所有权时使用 `shared_ptr`，遇到循环引用时配合 `weak_ptr`。**除非你知道你在做什么，否则不要手动管理内存。**
