@@ -39,7 +39,7 @@
     "object/inheritance",
     "object/polymorphism",
     "---模板---",
-    "template/index",
+    "template/function_template",
     "--- ---",
     "next"
   ]
