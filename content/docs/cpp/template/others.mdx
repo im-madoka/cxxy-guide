@@ -1,0 +1,81 @@
+---
+title: 其他模板
+---
+
+
+在前面的章节中，我们已经学习了函数模板和类模板。现代 C++（C++11 及以后）还引入了更多强大的模板相关特性，比如**别名模板**和**概念（Concept）**。这些特性让模板编程更加灵活和安全。
+
+## 别名模板
+
+在 C++11 之前，我们只能用 `typedef` 给类型起别名，但 `typedef` 不支持模板参数。C++11 引入了 `using` 语法，可以定义**模板类型别名**，让类型别名也能接受模板参数。
+
+```cpp
+template <typename T>
+using Vec = std::vector<T>;
+```
+
+这样，`Vec<int>` 就等价于 `std::vector<int>`，`Vec<double>` 就等价于 `std::vector<double>`。
+
+我们可以利用这个特性，将某些复杂的类型给简化（例如函数类型 `std::function`）。
+
+## 概念（Concept）
+
+随着模板编程越来越强大，模板参数的类型要求也越来越复杂。传统模板编程在类型不匹配时，编译器会报出非常难懂的错误信息。为了解决这个问题，C++20 引入了**概念（Concept）**，用于对模板参数的类型进行约束，让模板代码更安全、更易读。
+
+你可以把概念理解为“模板参数的类型条件”，只有满足条件的类型才能作为模板参数。（类似于其他语言里的类型约束）
+
+例如，我们要定义一个判断是否可加的 Concept：
+
+```cpp
+template <typename T>
+concept Addable = requires(T a, T b) {
+    { a + b } -> std::convertible_to<T>;
+};
+```
+
+然后我们就可以使用概念来约束模板参数：
+
+```cpp
+template <Addable T>
+T add(T a, T b) {
+    return a + b;
+}
+
+// 或者用 `requires` 关键字
+//
+// template <typename T>
+// requires Addable<T>
+// T add(T a, T b) {
+//     return a + b;
+// }
+```
+
+这样，就可以做到只有能相加的类型才能使用这个函数。
+
+```cpp
+int main() {
+    std::cout << add(1, 2) << std::endl;         // 输出 3
+    std::cout << add(3.14, 2.71) << std::endl;   // 输出 5.85
+    // add("hello", "world");                    // ❌ 编译错误，string 不支持直接用 + 得到 string（除非重载了运算符）
+    return 0;
+}
+```
+
+C++20 标准库已经定义了很多常用概念，比如：
+
+- `std::integral`：整型类型
+- `std::floating_point`：浮点类型
+- `std::same_as<T>`：类型完全相同
+- `std::convertible_to<T>`：可转换为 T
+- `std::default_initializable`：可默认初始化
+
+你可以直接用这些概念约束模板参数：
+
+```cpp
+template <std::integral T>
+T gcd(T a, T b) { /* ... */ }
+```
+
+<Callout>
+    别名模板是 C++11 的特性，概念是 C++20 的特性，使用时请确保你的编译器支持对应标准。
+</Callout>

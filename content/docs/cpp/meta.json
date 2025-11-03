@@ -41,6 +41,7 @@
     "---模板---",
     "template/function_template",
     "template/class_template",
+    "template/others",
     "--- ---",
     "next"
   ]
