@@ -119,3 +119,18 @@ int main() {
 
 这样，无论是 int、double、string 还是你自定义的类型，都可以用同一个函数来交换。
 
+当然，你也可以显式的制定类型参数：
+
+```cpp
+template <typename T>
+T max(T x, T y) {
+    // ...Some code
+}
+
+int main() {
+    max<int>(1, 2);
+    max<double>(1, 2);
+
+    return 0;
+}
+```
