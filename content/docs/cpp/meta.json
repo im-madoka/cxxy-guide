@@ -40,6 +40,7 @@
     "object/polymorphism",
     "---模板---",
     "template/function_template",
+    "template/class_template",
     "--- ---",
     "next"
   ]

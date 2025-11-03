@@ -1,0 +1,79 @@
+---
+title: 类模板
+---
+
+在上一节中，我们学习了函数模板，可以让函数支持多种类型。C++ 的模板不仅可以用于函数，还可以用于**类和结构体**，也就是**类模板**。
+
+**类模板**允许我们定义一个“泛型类”，可以根据不同的类型参数生成不同的类实例。
+
+## 类模板的语法
+
+类模板的基本语法如下：
+
+```cpp
+template <typename T>
+class 类名 {
+    // 类体，使用类型参数 T
+};
+```
+
+你也可以用 `class` 代替 `typename`，效果完全一样。
+
+例如，我们要写一个可以存放任意类型数据的盒子类：
+
+```cpp
+template <typename T>
+class Box {
+public:
+    T content;
+    Box(T c) : content(c) {}
+    void print() {
+        std::cout << content << std::endl;
+    }
+};
+```
+
+现在，无论是 int、double、string 还是你自定义的类型，都可以用同一个类来存储：
+
+```cpp
+int main() {
+    Box intBox(42);
+    intBox.print();
+
+    Box doubleBox(3.14);
+    doubleBox.print();
+
+    Box strBox("Hello, World!");
+    strBox.print();
+
+    // 和函数模板一样可以显式的定义 T 的类型
+    Box<int> box(114514);
+    box.print();
+
+    return 0;
+}
+```
+
+## 成员函数模板（类的成员函数也能单独模板化）
+
+除了类本身可以是模板，**类的成员函数也可以单独定义为模板**，即使类本身不是模板类。这让类的某些方法可以支持多种类型参数，而其他成员则保持原有类型。
+
+```cpp
+class Printer {
+public:
+    template <typename T>
+    void print(const T& value) {
+        std::cout << value << std::endl;
+    }
+};
+
+int main() {
+    Printer p;
+    p.print(123);
+    p.print(3.14);
+    p.print("hello");
+    return 0;
+}
+```
+
+你可以看到，`Printer` 类本身不是模板类，但它的 `print` 方法是模板函数，可以打印任意类型的数据。
