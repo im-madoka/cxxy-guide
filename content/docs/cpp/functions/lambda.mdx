@@ -80,9 +80,8 @@ std::cout << add_x(5);
 许多标准库算法都用到了 Lambda 表达式，例如 `std::sort` 和 `std::for_each`：
 
 ```cpp lineNumbers title="main.cpp"
-// 想要运行下面的代码，请确保你的项目为 C++23 及以上版本的标准
+#include <iostream>
 #include <algorithm> // sort 需要引入这个头文件
-#include <print>
 
 int main() {
     int arr[] = {4, 2, 1, 3, 5};
@@ -92,7 +91,7 @@ int main() {
     });
 
     std::for_each(arr, arr+5, [](int n) {
-        std::println(n);
+        std::cout << n << std::endl;
     }); // 遍历整个 arr 并输出所有项。在这里可以使用 for range 来代替
 
     return 0;

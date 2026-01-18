@@ -36,7 +36,7 @@ C++ 支持三种继承方式：
 让我们回到上面的例子。 我们可以定义一个基类 `Animal`，然后定义两个派生类 `Dog` 和 `Cat`：
 
 ```cpp lineNumbers title="main.cpp"
-#include <print>
+#include <iostream>
 #include <string>
 
 class Animal {
@@ -49,14 +49,14 @@ public:
     Animal(std::string n, int a) : name(n), age(a) {}
 
     void eat() {
-        std::println("{} 在吃饭", this->name);
+        std::cout << this->name << " 在吃饭" << std::endl;
     }
 
     void is_alive() {
         if (this->alive) {
-            std::println("{} 是活的", this->name);
+            std::cout << this->name << " 是活的" << std::endl;
         } else {
-            std::println("{} 已经死了", this->name);
+            std::cout << this->name << " 已经死了" << std::endl;
         }
     }
 };
@@ -66,7 +66,7 @@ public:
     Dog(std::string n, int a) : Animal(n, a) {}
 
     void bark() {
-        std::println("{} 正在汪汪叫", this->name);
+        std::cout << this->name << " 在汪汪叫" << std::endl;
     }
 
     // Dog 可以访问 age 和 name，但是不能访问 alive
@@ -77,9 +77,9 @@ public:
     Cat(std::string n, int a) : Animal(n, a) {}
 
     void meow() {
-        std::println("{} 正在喵喵叫", this->name);
+        std::cout << this->name << " 在喵喵叫" << std::endl;
     }
-}
+};
 
 int main() {
     Dog dog("小黑", 3);
