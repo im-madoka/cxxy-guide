@@ -14,6 +14,9 @@ import remarkMath from "remark-math";
 export const docs = defineDocs({
   docs: {
     schema: frontmatterSchema,
+    postprocess: {
+      includeProcessedMarkdown: true,
+    },
   },
   meta: {
     schema: metaSchema,

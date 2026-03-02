@@ -1,0 +1,38 @@
+---
+title: 安装 Git
+---
+
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+
+Git 支持 Windows、MacOS 和 Linux 等多个操作系统。下面介绍在不同操作系统上安装 Git 的方法。
+
+<Tabs items={["Windows", "MacOS", "Linux", "Android"]}>
+    <Tab>
+        在 Windows 上安装 Git 最简单的方式是下载并安装 Git for Windows。你可以从 [Git for Windows 官方网站](https://git-scm.com/download/win) 下载最新版本的安装包。
+
+        下载完成后，运行安装程序，按照提示完成安装。在安装过程中，可以选择默认选项，或者根据需要进行自定义设置。安装完成后，可以通过在命令行（CMD 或 PowerShell）中输入 `git --version` 来验证安装是否成功。
+    </Tab>
+    <Tab>
+        MacOS 使用 git 最方便的方式是安装 Xcode Command Line Tools（或者是完整版 Xcode）。Xcode Command Line Tools 可以通过在终端输入 `xcode-select --install` 来安装。如果已经安装了 Xcode，可以直接使用其中自带的 Git。当然，Mavericks （10.9） 或更高版本的系统中，你可以在 Terminal 里运行 'git' 命令，如果没有安装过命令行开发者工具，将会提示你安装。
+
+        另一种方式是通过 Homebrew 来安装 Git。首先确保你已经安装了 Homebrew，然后在终端中运行以下命令：
+
+        ```bash
+        brew install git
+        ```
+
+        安装完成后，可以通过在终端输入 `git --version` 来验证安装是否成功。
+    </Tab>
+    <Tab>
+        Linux 系统通常预装了 Git，可以通过终端输入 `git --version` 来检查是否已安装。如果没有安装，可以使用包管理器进行安装。
+    </Tab>
+    <Tab>
+        Android 上可以使用 Termux 来安装 Git。首先，确保你已经安装了 Termux，然后在 Termux 中运行以下命令：
+
+        ```bash
+        pkg install git
+        ```
+
+        安装完成后，可以通过在 Termux 中输入 `git --version` 来验证安装是否成功。
+    </Tab>
+</Tabs>

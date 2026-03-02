@@ -7,9 +7,12 @@
     "how_to_ask_questions_the_smart_way",
     "---Git---",
     "git/index",
+    "git/installation",
     "---Markdown---",
     "markdown/index",
     "markdown/editor",
-    "markdown/syntax"
+    "markdown/syntax",
+    "---Shell---",
+    "shell/index"
   ]
 }

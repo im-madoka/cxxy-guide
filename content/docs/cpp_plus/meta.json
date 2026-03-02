@@ -1,6 +1,6 @@
 {
-  "title": "C++ 进阶",
-  "description": "学习如何将 C++ 工程化",
+  "title": "C++ 进阶与工程化",
+  "description": "学习 C++ 的进阶知识和工程化实践",
   "root": true,
   "pages": ["index"]
 }
