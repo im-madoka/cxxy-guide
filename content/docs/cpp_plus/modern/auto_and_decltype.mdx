@@ -1,0 +1,76 @@
+---
+title: auto 与类型推导
+description: 告别冗长的类型声明。
+---
+
+在 C++11 之前，我们声明变量时必须明确指出它的类型，比如 `int`、`double`。对于短类型来说或许这没有什么不好的，但是当我们引入了类和模板以后，就有可能会出现一些极其复杂的类型，比如 `std::map<std::string, std::vector<int>>::iterator`，可能会写出这样的代码：
+
+```cpp
+std::map<std::string, std::vector<int>> my_map;
+std::map<std::string, std::vector<int>>::iterator it = my_map.begin();
+
+ThisIsAClassForSomething obj = ThisIsAClassForSomething(value);
+```
+
+代码很容易出现类型重复冗余（`ThisIsAClassForSomething` 写了两遍）
+
+为了解决这一个问题，现代 C++ 引入了 `auto` 关键字，它让编译器根据变量的**初始值**自动推导出类型。这不仅减少了敲键盘的次数，更重要的是提高了代码的可读性和可维护性。
+
+`auto` 的使用非常简单：在声明变量时用 `auto` 代替具体的类型。
+
+```cpp
+auto i = 10;          // i 被推导为 int
+auto d = 3.14;        // d 被推导为 double
+auto s = "hello";      // s 被推导为 const char*
+auto b = true;         // b 被推导为 bool
+```
+
+<Callout type="warn">
+    **TIPS**：使用 `auto` 声明的变量**必须初始化**。
+
+    ```cpp
+    auto x; // ❌ 错误！编译器不知道你想存什么，无法推导类型
+    ```
+</Callout>
+
+比如，在文章开头提到的代码就可以写为：
+
+```cpp
+std::map<std::string, std::vector<int>> my_map;
+auto it = my_map.begin();
+
+auto obj = ThisIsAClassForSomething(value);
+```
+
+很明显这比传统的写法简洁许多。
+
+正如我们在基础篇提到的，遍历容器时和 `auto` 搭配是绝配：
+
+```cpp
+std::vector<int> vec = {1, 2, 3};
+for (const auto& x : vec) {
+    std::cout << x << " ";
+}
+```
+
+你无须考虑 x 究竟应该是什么类型，就可以安全的定义 x 变量。
+
+<Callout type="info">
+**TIPS：**
+
+默认情况下，`auto` 会丢弃“引用”和“顶层 const”。如果你需要引用或常量，需要手动加上修饰符：
+
+```cpp
+int x = 0;
+int& ref = x;
+
+auto a = ref;  // a 是 int，而不是引用！它拷贝了 ref 指向的值
+auto& b = ref; // b 是 int&，它是 x 的引用
+
+const int c = 10;
+auto d = c;    // d 是 int，不是 const int（拷贝了值）
+const auto e = c; // e 是 const int
+```
+</Callout>
+
+当然，`auto` 虽然方便，但是也会带来代码阅读有些许不明确的问题。在项目当中，这类问题通常不是靠个人直觉解决的，而是靠团队约定来统一。也就是说，如果项目已经有自己的代码风格规范，那么是否使用 `auto`、在什么场景下使用 `auto`，都应该优先遵循项目现有规则；如果你还没有形成自己的判断标准，也可以参考一些更成熟的实践来源，例如 C++ 委员会整理的 Core Guidelines、Google 的 C++ Style Guide，LLVM 的 Coding Standards 等等。它们在 `auto` 的使用边界上各有侧重，但共同目标都是让代码在简洁和可读之间取得平衡。
