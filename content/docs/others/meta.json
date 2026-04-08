@@ -13,6 +13,8 @@
     "markdown/editor",
     "markdown/syntax",
     "---Shell---",
-    "shell/index"
+    "shell/index",
+    "---数值方法---",
+    "numerical_methods/index"
   ]
 }
