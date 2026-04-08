@@ -1,5 +1,5 @@
 ---
-title: auto 与类型推导
+title: auto 类型推导
 description: 告别冗长的类型声明。
 ---
 
@@ -19,8 +19,8 @@ ThisIsAClassForSomething obj = ThisIsAClassForSomething(value);
 `auto` 的使用非常简单：在声明变量时用 `auto` 代替具体的类型。
 
 ```cpp
-auto i = 10;          // i 被推导为 int
-auto d = 3.14;        // d 被推导为 double
+auto i = 10;           // i 被推导为 int
+auto d = 3.14;         // d 被推导为 double
 auto s = "hello";      // s 被推导为 const char*
 auto b = true;         // b 被推导为 bool
 ```

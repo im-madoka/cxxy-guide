@@ -6,6 +6,7 @@
     "index",
     "---现代 C++---",
     "modern/index",
-    "modern/auto_and_decltype"
+    "modern/auto_and_decltype",
+    "modern/raii"
   ]
 }
