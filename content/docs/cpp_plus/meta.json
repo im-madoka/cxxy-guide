@@ -7,6 +7,7 @@
     "---现代 C++---",
     "modern/index",
     "modern/auto_and_decltype",
-    "modern/raii"
+    "modern/raii",
+    "modern/const_and_constexpr"
   ]
 }
