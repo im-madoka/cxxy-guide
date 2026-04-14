@@ -12,7 +12,7 @@ export const baseOptions: BaseLayoutProps = {
     title: (
       <>
         <Image src="/icon.png" alt="Logo" width={24} height={24} />
-        <span className="font-medium [.uwu_&]:hidden [header_&]:text-[15px]">
+        <span className="font-medium in-[.uwu]:hidden in-[header]:text-[15px]">
           成贤计协指南
         </span>
       </>

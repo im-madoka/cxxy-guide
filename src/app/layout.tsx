@@ -2,9 +2,12 @@ import "@/app/global.css";
 import { resolveMetadataBase } from "@/lib/metadata";
 import { RootProvider } from "fumadocs-ui/provider/next";
 import { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Geist } from "next/font/google";
 
 import "katex/dist/katex.css";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const inter = Inter({
   subsets: ["latin"],
@@ -20,7 +23,7 @@ export const metadata: Metadata = {
 
 export default function Layout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="zh_CN" className={inter.className} suppressHydrationWarning>
+    <html lang="zh_CN" className={cn(inter.className, "font-sans", geist.variable)} suppressHydrationWarning>
       <head>
         {process.env.NODE_ENV === "production" ? (
           <script

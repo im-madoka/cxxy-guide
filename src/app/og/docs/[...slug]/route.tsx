@@ -1,6 +1,12 @@
 import { getPageImage, source } from "@/lib/source";
+import {
+  DocsOgImage,
+  getOgFonts,
+  getOgLogoSrc,
+  ogImageSize,
+  ogSiteName,
+} from "@/lib/og-image";
 import { ImageResponse } from "@takumi-rs/image-response";
-import { generate as DefaultImage } from "fumadocs-ui/og/takumi";
 import { notFound } from "next/navigation";
 
 export const revalidate = false;
@@ -12,17 +18,19 @@ export async function GET(
   const { slug } = await params;
   const page = source.getPage(slug.slice(0, -1));
   if (!page) notFound();
+  const logoSrc = await getOgLogoSrc();
 
   return new ImageResponse(
-    <DefaultImage
+    <DocsOgImage
       title={page.data.title}
       description={page.data.description}
-      site="My App"
+      logoSrc={logoSrc}
+      site={ogSiteName}
     />,
     {
-      width: 1200,
-      height: 630,
+      ...ogImageSize,
       format: "webp",
+      fonts: getOgFonts(),
     },
   );
 }
