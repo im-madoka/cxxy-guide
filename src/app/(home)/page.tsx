@@ -1,6 +1,18 @@
 import { Card, Cards } from "fumadocs-ui/components/card";
 import { HammerIcon, HomeIcon } from "lucide-react";
+import type { Metadata } from "next";
 import Image from "next/image";
+
+export const metadata: Metadata = {
+  title: "成贤计协指南",
+  description: "欢迎来到东大成贤计算机协会指南。",
+  openGraph: {
+    images: "/icon.png",
+  },
+  twitter: {
+    images: "/icon.png",
+  },
+};
 
 export default function HomePage() {
   return (
