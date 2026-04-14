@@ -1,4 +1,5 @@
 import "@/app/global.css";
+import { resolveMetadataBase } from "@/lib/metadata";
 import { RootProvider } from "fumadocs-ui/provider/next";
 import { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -11,6 +12,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "成贤计协指南",
+  metadataBase: resolveMetadataBase(),
   icons: {
     icon: "/icon.png",
   },
