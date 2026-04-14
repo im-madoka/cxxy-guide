@@ -11,26 +11,16 @@ export const ogImageSize = {
 
 const ogFontPath = join(
   process.cwd(),
-  "public/fonts/SourceHanSansSC-Regular.otf",
-);
-const ogMediumFontPath = join(
-  process.cwd(),
   "public/fonts/SourceHanSansSC-Medium.otf",
 );
 const ogLogoPath = join(process.cwd(), "src/app/icon.png");
 
 let ogFontDataPromise: Promise<Buffer> | undefined;
-let ogMediumFontDataPromise: Promise<Buffer> | undefined;
 let ogLogoDataUrlPromise: Promise<string> | undefined;
 
 function loadOgFontData() {
   ogFontDataPromise ??= readFile(ogFontPath);
   return ogFontDataPromise;
-}
-
-function loadOgMediumFontData() {
-  ogMediumFontDataPromise ??= readFile(ogMediumFontPath);
-  return ogMediumFontDataPromise;
 }
 
 async function loadOgLogoDataUrl() {
@@ -48,9 +38,9 @@ export function getOgFonts() {
     },
     {
       name: ogFontFamily,
-      data: loadOgMediumFontData,
+      data: loadOgFontData,
       style: "normal" as const,
-      weight: 600,
+      weight: 500,
     },
   ];
 }
@@ -125,7 +115,7 @@ export function DocsOgImage({
           display: "flex",
           margin: 0,
           fontSize: "84px",
-          fontWeight: 600,
+          fontWeight: 500,
           lineHeight: 1.14,
           letterSpacing: "-0.04em",
           color: "#ffffff",
