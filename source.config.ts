@@ -8,6 +8,7 @@ import {
 import { transformerTwoslash } from "fumadocs-twoslash";
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
+import lastModified from "fumadocs-mdx/plugins/last-modified";
 
 // You can customise Zod schemas for frontmatter and `meta.json` here
 // see https://fumadocs.dev/docs/mdx/collections#define-docs
@@ -42,4 +43,5 @@ export default defineConfig({
       parseMdx: true,
     },
   },
+  plugins: [lastModified()],
 });

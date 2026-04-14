@@ -1,21 +1,23 @@
-import { source } from '@/lib/source';
+import { getPageImage, source } from "@/lib/source";
 import {
   DocsBody,
   DocsDescription,
   DocsPage,
   DocsTitle,
-} from 'fumadocs-ui/page';
-import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
-import { createRelativeLink } from 'fumadocs-ui/mdx';
-import { getMDXComponents } from '@/mdx-components';
+  PageLastUpdate,
+} from "fumadocs-ui/page";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { createRelativeLink } from "fumadocs-ui/mdx";
+import { getMDXComponents } from "@/mdx-components";
 
-export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
+export default async function Page(props: PageProps<"/docs/[[...slug]]">) {
   const params = await props.params;
   const page = source.getPage(params.slug);
   if (!page) notFound();
 
   const MDXContent = page.data.body;
+  const lastModifiedTime = page.data.lastModified;
 
   return (
     <DocsPage toc={page.data.toc} full={page.data.full}>
@@ -29,6 +31,7 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
           })}
         />
       </DocsBody>
+      {lastModifiedTime && <PageLastUpdate date={lastModifiedTime} />}
     </DocsPage>
   );
 }
@@ -38,7 +41,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata(
-  props: PageProps<'/docs/[[...slug]]'>,
+  props: PageProps<"/docs/[[...slug]]">,
 ): Promise<Metadata> {
   const params = await props.params;
   const page = source.getPage(params.slug);
@@ -47,5 +50,8 @@ export async function generateMetadata(
   return {
     title: page.data.title,
     description: page.data.description,
+    openGraph: {
+      images: getPageImage(page).url,
+    },
   };
 }
