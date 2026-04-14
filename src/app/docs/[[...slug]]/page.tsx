@@ -1,3 +1,4 @@
+import { resolveDocOgImage } from "@/lib/doc-og";
 import { getPageImage, source } from "@/lib/source";
 import {
   DocsBody,
@@ -51,7 +52,10 @@ export async function generateMetadata(
     title: page.data.title,
     description: page.data.description,
     openGraph: {
-      images: getPageImage(page).url,
+      images: resolveDocOgImage(page.data.ogImage, getPageImage(page).url),
+    },
+    twitter: {
+      images: resolveDocOgImage(page.data.ogImage, getPageImage(page).url),
     },
   };
 }

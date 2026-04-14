@@ -9,12 +9,15 @@ import { transformerTwoslash } from "fumadocs-twoslash";
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
 import lastModified from "fumadocs-mdx/plugins/last-modified";
+import { z } from "zod";
 
 // You can customise Zod schemas for frontmatter and `meta.json` here
 // see https://fumadocs.dev/docs/mdx/collections#define-docs
 export const docs = defineDocs({
   docs: {
-    schema: frontmatterSchema,
+    schema: frontmatterSchema.extend({
+      ogImage: z.string().optional(),
+    }),
     postprocess: {
       includeProcessedMarkdown: true,
     },
