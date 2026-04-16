@@ -2,5 +2,10 @@
   "title": "数值方法",
   "description": "数值方法教程",
   "root": true,
-  "pages": ["index", "---第一章 插值法---", "chapter1/introduce"]
+  "pages": [
+    "index",
+    "---第一章 插值法---",
+    "chapter1/introduce",
+    "chapter1/lagrange_interpolation"
+  ]
 }
