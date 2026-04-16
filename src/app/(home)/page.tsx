@@ -1,5 +1,5 @@
 import { Card, Cards } from "fumadocs-ui/components/card";
-import { HammerIcon, HomeIcon } from "lucide-react";
+import { HammerIcon, HomeIcon, BookPlus } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 
@@ -32,6 +32,13 @@ export default function HomePage() {
         </Card>
         <Card icon={<HammerIcon />} title={"C/C++ 基础指南"} href={"/docs/cpp"}>
           学习 C/C++ 的基础知识
+        </Card>
+        <Card
+          icon={<BookPlus />}
+          title={"数值方法"}
+          href={"/docs/numerical_methods"}
+        >
+          进入数值方法的世界
         </Card>
         <Card icon={<HammerIcon />} title={"其他"} href={"/docs/others"}>
           其他乱七八糟的教程
